@@ -1,0 +1,1915 @@
+## Base ---
+snippet i "import"
+import (
+	$0
+)
+endsnippet
+
+snippet c "const group defn"
+const (
+	$0
+)
+endsnippet
+
+snippet v "var group defn"
+var (
+	$0
+)
+endsnippet
+
+snippet ff "fmt.Printf"
+fmt.Printf("$1: %v\n", $0)
+endsnippet
+
+snippet ff "log.Printf"
+log.Printf($0)
+endsnippet
+
+snippet fsf "fmt.Sprintf[]"
+fmt.Sprintf("$1", $0)
+endsnippet
+
+snippet fln "fmt.Println"
+fmt.Println("$1")
+endsnippet
+
+snippet flog
+fmt.Println("-------------------------------- $1")
+$0
+fmt.Println("-------------------------------- $1")
+endsnippet
+
+snippet li
+logger.Info(fmt.Sprintf("$1 : %+v\n", $2))
+$0
+endsnippet
+
+snippet le "logger.Error"
+$1.Logger.Error("$2 failed", "error", err.Error())
+endsnippet
+
+snippet lv "logger.Vars"
+logger.Vars("${1:templateString}", ${2:strings...})
+endsnippet
+
+snippet itype "check interface type" b
+if v, ok := ${1:varI}.($2); ok {
+	// type check succeeded
+	// Process(v)
+	// return
+}
+// $1 is not of type $2
+endsnippet
+
+snippet iswitch "Description" b
+switch t := $1.(type) {
+	case *$2:
+		fmt.Printf(“Type $2 %T with value %v\n”, t, t)
+	// case *Circle:
+		// fmt.Printf(“Type Circle %T with value %v\n”, t, t)
+	// case float32:
+		// fmt.Printf(“Type float32 with value %v\n”, t)
+	// case nil:
+		// fmt.Println(“nil value: nothing to check?”)
+	default:
+		fmt.Printf(“Unexpected type %T”, t)
+}
+endsnippet
+
+snippet range "range over map"
+for k, v := range $1 {
+	fmt.Println("Key:", k, "Value:", v)
+}
+endsnippet
+
+snippet st "type definition - Struct" b
+// $1 ${2:model}
+type $1 struct {
+	$0
+}
+endsnippet
+
+snippet me "method" b
+func ($1 *$2) $3() {
+	$0
+}
+endsnippet
+
+snippet b2s "[]byte to string" b
+string(${1:[]byte{`hello`}})
+endsnippet
+
+snippet jj "sample json" b
+[]byte(`"{\"name\":\"tom\"}"`)
+endsnippet
+
+snippet if "if error"
+if ${1:err != nil } {
+	lgr.Printf("Error while $2 %v", err.Error()) $0
+}
+endsnippet
+
+## Logging / Debugging ---
+snippet log "log block"
+logger.Debug("========================================== $1")
+logger.Debug("$1", "$2", $0)
+logger.Debug("==========================================")
+endsnippet
+
+snippet dbg "log block"
+logger.Debug("========================================== $1")
+logger.Debug("$1", "$2", $0)
+logger.Debug("==========================================")
+endsnippet
+
+
+## Structs ---
+snippet ts "struct defn"
+// $1 is a struct
+type $1 struct {
+	$0
+}
+endsnippet
+
+snippet tys "struct defn"
+// $1 is a data wrapper
+type $1 struct {
+	ID            uuid.UUID \`db:"`!p snip.rv = t[1].lower()`_id" json:"id"\`
+	CreatedAt     time.Time \`db:"created_at" json:"createdAt"\`
+	UpdatedAt     time.Time \`db:"updated_at" json:"updatedAt"\`
+}
+
+// IsNode implements the GraphQL Node interface
+func (`!p
+s = t[1] or "o"
+
+snip.rv = s[0].lower()
+` $1) IsNode() {}
+endsnippet
+
+snippet nys
+// $1 is a struct
+type $1 struct {
+}
+
+// New$1 generates a new $1 struct
+func New$1() *$1 {
+	n$1 := &$1{}
+
+	return n$1
+}
+
+endsnippet
+
+snippet suite
+// $1Suite is a struct
+type $1Suite struct {
+	Logger  log15.Logger
+	FigData string
+	Headers map[string]string
+}
+
+// New$1Suite generates a new $1Suite struct
+func New$1Suite(f string, l log15.Logger) *$1Suite {
+	ts := &$1Suite{
+		FigData: f,
+		Logger:  l,
+	}
+
+	return ts
+}
+
+
+// RunSteps executes the integration steps for this suite
+func (st *$1Suite) RunSteps() error {
+
+	return nil
+}
+endsnippet
+
+snippet ti "interface"
+// $1 is an behavior wrapper
+type $1 interface {
+	$0
+}
+endsnippet
+
+snippet f "init func"
+func $1(){
+	$0
+}
+endsnippet
+
+# snippet ife "perform and check error" b
+# ${1:err} := $2
+
+# if err != nil {
+	# log.Errorf("error while $1 %v \n", err)
+# }
+
+# $0
+# endsnippet
+
+snippet msi "map"
+map[string]interface{}
+endsnippet
+
+
+snippet fi "init func"
+func init(){
+	$0
+}
+endsnippet
+
+snippet init "init func"
+func init(){
+	$0
+}
+endsnippet
+
+snippet doc "document block" b
+//---------
+// $1
+// Ref: $2
+//---------
+// $0
+//---------
+endsnippet
+
+snippet fh "handler" b
+// $1
+func $1(w http.ResponseWriter, r *http.Request) {
+	$0
+}
+endsnippet
+
+snippet tyi "type interface" b
+// $1 ${2:can ...}
+type $1 interface {
+	$0
+}
+endsnippet
+
+snippet tyt "type type"
+// $1 ${2:is a type}
+type $1 $0
+
+endsnippet
+
+
+snippet h "handler" b
+// $1
+func $1(w http.ResponseWriter, r *http.Request) {
+	$0
+}
+endsnippet
+
+snippet h "status only"
+// $1 is a Status handler
+func $1(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Server", "A Go Web Server")
+	w.WriteHeader(200)
+}
+endsnippet
+
+snippet h "plain text"
+// $1 is a Plain Text handler
+func $1(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "text/plain")
+	w.Write([]byte("OK"))
+}
+endsnippet
+
+snippet h "JSON response"
+type Profile struct {
+	Name string
+	Interests []string
+}
+
+func $1(w http.ResponseWriter, r *http.Request) {
+	profile := Profile{"Alex", []string{"snowboarding", "programming"}}
+
+	js, err := json.Marshal(profile)
+	if err != nil {
+	http.Error(w, err.Error(), http.StatusInternalServerError)
+	return
+	}
+
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Write(js)
+}
+endsnippet
+
+snippet h "XML Response"
+// Profile is a struct
+type Profile struct {
+	Name string
+	Interests []string
+}
+
+// $1 is an XML Response Handler
+func $1(w http.ResponseWriter, r *http.Request) {
+	profile := Profile{"Alex", []string{"snowboarding", "programming"}}
+
+	x, err := xml.MarshalIndent(profile, "", "  ")
+	if err != nil {
+	http.Error(w, err.Error(), http.StatusInternalServerError)
+	return
+	}
+
+	w.Header().Set("Content-Type", "application/xml")
+	w.Write(x)
+}
+endsnippet
+
+snippet h "Send a file"
+// $1 is a File Handler - sends a file to client
+func $1(w http.ResponseWriter, r *http.Request) {
+	// Assuming you want to serve a photo at 'images/foo.png'
+	fp := path.Join("images", "foo.png")
+	http.ServeFile(w, r, fp)
+}
+endsnippet
+
+snippet h "HTML Template"
+// Profile is a struct
+type Profile struct {
+	Name string
+	Interests []string
+}
+
+// $1 is an HTML Template Handler
+func $1(w http.ResponseWriter, r *http.Request) {
+	profile := Profile{"Alex", []string{"snowboarding", "programming"}}
+
+	fp := path.Join("templates", "index.html")
+	tmpl, err := template.ParseFiles(fp)
+	if err != nil {
+	http.Error(w, err.Error(), http.StatusInternalServerError)
+	return
+	}
+
+	if err := tmpl.Execute(w, profile); err != nil {
+	http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+endsnippet
+
+snippet mss "map[string]string" b
+$1 := map[string]string{ $0 }
+endsnippet
+
+snippet ba "byte array" b
+[]byte$0
+endsnippet
+
+# snippet sa "string array" b
+# []string{$1}
+# endsnippet
+
+
+snippet p "package" b
+package $1
+
+endsnippet
+
+
+snippet ckey "context key" b
+type contextKey string
+
+// String converts the context key to a string
+func (c contextKey) String() string {
+	return "$1 " + string(c)
+}
+
+var (
+	ctxKey$2 = contextKey("$1")
+)
+
+endsnippet
+
+snippet ci "comment for interface" b
+// $1 is an interface
+endsnippet
+
+snippet cs "comment for struct" b
+// $1 is a struct
+endsnippet
+
+snippet cf "comment for function" b
+// $1 is a function
+endsnippet
+
+snippet range "range over array"
+for idx, el := range $1 {
+	log.Printf("%v. Element: %v", idx, el)
+}
+endsnippet
+
+snippet for "range over array"
+for _, $1 := range ${2:$1s} {
+	${0:log.Printf("$1 %v\n", $1)}
+}
+endsnippet
+
+
+## GraphQL ---
+snippet q "mutationResolver"
+func (r *mutationResolver) $1(ctx context.Context, name string) (int, error) {
+	sql := `select * from create_org($1);`
+	var orgID int
+
+	err := r.DB.
+		SQL(sql, name).
+		QueryScalar(&orgID)
+
+	if err != nil {
+		r.Logger.Error("create Org failed", "error", err.Error())
+		return 0, err
+	}
+
+	return orgID, nil
+}
+endsnippet
+## Micro ---
+snippet mu
+service := micro.NewService(
+	micro.Name("go.micro.srv.$1"),
+)
+
+service.Init()
+
+// $1.RegisterProfileHandler(service.Server(), &Profile{
+	// hotels: loadProfiles("data/profiles.json"),
+// })
+
+service.Run()
+endsnippet
+
+## Chi ---
+snippet action
+// $1Action is the action
+type $1Action struct {
+	Store  model.IUserDB
+	Logger log15.Logger
+
+	// form fields go here...
+}
+
+func (a *$1Action) Bind(r *http.Request) error {
+	// Remove protected fields
+	//a.ProtectedID = ""
+	//a.ProtectedCreatedAt = ""
+	//a.ProtectedUpdatedAt = ""
+
+	ok, err := govalidator.ValidateStruct(a)
+
+	if !ok {
+		return err
+	}
+
+	return nil
+}
+
+func (a *$1Action) run() ([]byte, error) {
+	u, err := a.Store.$2()
+
+	if err != nil {
+		a.Logger.Error("creating event", "error", err.Error())
+		return u, err
+	}
+
+	return u, nil
+}
+
+func (svc *Service) $1Handler(w http.ResponseWriter, r *http.Request) {
+	cmd := &$1Action{
+		Store:  svc.Store,
+		Logger: svc.Logger,
+	}
+
+	if err := render.Bind(r, cmd); err != nil {
+		render.Render(w, r, api.ErrInvalidRequest(err))
+		return
+	}
+
+	co, err := cmd.run()
+
+	if err != nil {
+		svc.Logger.Error("error creating record", "error", err.Error())
+		render.Render(w, r, api.ErrRender(err))
+		return
+	}
+
+	render.JSON(w, r, co)
+}
+endsnippet
+
+snippet svc "chi Router Service" b
+// Service wraps the feature/service as a router for mounting
+func Service() chi.Router {
+	r := chi.NewRouter()
+
+	$0
+
+	return r
+}
+endsnippet
+
+snippet router "Chi simple router"
+package ${1:article}
+
+import (
+	"github.com/go-chi/chi"
+)
+
+// Routes wraps the $1s management as a service
+func Routes() chi.Router {
+	r := chi.NewRouter()
+
+	// Collection routes
+	// r.Post("/", Create${2:Article})       // POST /$1
+	// r.Get("/search", Search$2s) // GET /$1s/search
+
+
+	return r
+}
+endsnippet
+
+snippet router "Chi CRUD router"
+package ${1:article}
+
+import (
+	"github.com/TulsiTech/chichi/lib/pager"
+	"github.com/pressly/chi"
+)
+
+// Routes wraps the $1s management as a service
+func Routes() chi.Router {
+	r := chi.NewRouter()
+
+	// Middleware Stack
+	r.With(pager.Paginate).Get("/", List${2:Article}s)
+
+	// Collection routes
+	r.Post("/", Create$2)       // POST /$1
+	r.Get("/search", Search$2s) // GET /$1s/search
+
+	// Member Routes
+	r.Route("/:$1ID", func(r chi.Router) {
+		r.Use($2Ctx)            // Load the *$2 on the request context
+		r.Get("/", Get$2s)       // GET /$1s/123
+		r.Put("/", Update$2)    // PUT /$1s/123
+		r.Delete("/", Delete$2) // DELETE /$1/123
+	})
+
+	return r
+}
+endsnippet
+
+snippet jcrud "JSON CRUD"
+package $1
+
+import (
+	"context"
+	"net/http"
+
+	"github.com/pressly/chi"
+	"github.com/pressly/chi/render"
+)
+
+const $1Key = `$1`
+
+// $2 is the domain model
+type $2 struct {
+	ID    string `json:"id"`
+	Title string `json:"title"`
+}
+
+// $2 fixture data
+var $1s = []*$2{
+	{ID: "1", Title: "Hi"},
+	{ID: "2", Title: "sup"},
+}
+
+// $2Ctx middleware is used to load an $2 object from
+// the URL parameters passed through as the request. In case
+// the $2 could not be found, we stop here and return a 404.
+func $2Ctx(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		$1ID := chi.URLParam(r, "$1ID")
+		$1, err := dbGet$2($1ID)
+		if err != nil {
+			render.Status(r, http.StatusNotFound)
+			render.JSON(w, r, http.StatusText(http.StatusNotFound))
+			return
+		}
+		ctx := context.WithValue(r.Context(), $1Key, $1)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
+
+// Search$2s searches the $2s data for a matching $1.
+// It's just a stub, but you get the idea.
+func Search$2s(w http.ResponseWriter, r *http.Request) {
+	// Filter by query param, and search...
+	render.JSON(w, r, $1s)
+}
+
+// List$2s returns an array of $2s.
+func List$2s(w http.ResponseWriter, r *http.Request) {
+	render.JSON(w, r, $1s)
+}
+
+// Create$2 persists the posted $2 and returns it
+// back to the client as an acknowledgement.
+func Create$2(w http.ResponseWriter, r *http.Request) {
+	var data struct {
+		*$2
+		OmitID interface{} `json:"id,omitempty"` // prevents 'id' from being set
+	}
+	// ^ the above is a nifty trick for how to omit fields during json unmarshalling
+	// through struct composition
+
+	if err := render.Bind(r.Body, &data); err != nil {
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	$1 := data.$2
+	dbNew$2($1)
+
+	render.JSON(w, r, $1)
+}
+
+// Get$2 returns the specific $2. You'll notice it just
+// fetches the $2 right off the context, as its understood that
+// if we made it this far, the $2 must be on the context. In case
+// its not due to a bug, then it will panic, and our Recoverer will save us.
+func Get$2(w http.ResponseWriter, r *http.Request) {
+	// Assume if we've reach this far, we can access the $1
+	// context because this handler is a child of the $2Ctx
+	// middleware. The worst case, the recoverer middleware will save us.
+	$1 := r.Context().Value($1Key).(*$2)
+
+	// chi provides a basic companion subpackage "github.com/pressly/chi/render", however
+	// you can use any responder compatible with net/http.
+	render.JSON(w, r, $1)
+}
+
+// Update$2 updates an existing $2 in our persistent store.
+func Update$2(w http.ResponseWriter, r *http.Request) {
+	$1 := r.Context().Value($1Key).(*$2)
+
+	data := struct {
+		*$2
+		OmitID interface{} `json:"id,omitempty"` // prevents 'id' from being overridden
+	}{$2: $1}
+
+	if err := render.Bind(r.Body, &data); err != nil {
+		render.JSON(w, r, err)
+		return
+	}
+	$1 = data.$2
+
+	render.JSON(w, r, $1)
+}
+
+// Delete$2 removes an existing $2 from our persistent store.
+func Delete$2(w http.ResponseWriter, r *http.Request) {
+	var err error
+
+	// Assume if we've reach this far, we can access the $1
+	// context because this handler is a child of the $2Ctx
+	// middleware. The worst case, the recoverer middleware will save us.
+	$1 := r.Context().Value($1Key).(*$2)
+
+	$1, err = dbRemove$2($1.ID)
+	if err != nil {
+		render.JSON(w, r, err)
+		return
+	}
+
+	// Respond with the deleted object, up to you.
+	render.JSON(w, r, $1)
+}
+endsnippet
+
+snippet hnd "JSON handler"
+// $1 is a JSON handler for $1
+func $1(w http.ResponseWriter, r *http.Request) {
+
+	data := map[string]string{
+		"status": "201",
+		"token":  "hello-hello",
+	}
+
+	render.JSON(w, r, data)
+}
+endsnippet
+
+snippet hh "html handler" b
+// r.Get("/$1", ctrl.$1Page)
+
+// $1 - renders the page
+func (c *controller) $1Page(w http.ResponseWriter, r *http.Request) {
+	// Get URL params
+	// cID := chi.URLParam(r, "categoryID")
+
+	// Get data from DB
+	// cats, err := c.repo.getTreeAsCollection()
+
+	// if err != nil {
+		// log.Printf("Load data error %v", err)
+	// }
+
+	// Setup data required by templates
+	data := tpl.D{
+		"Title":      "chichi.com | Categories",
+		// "categories": cats.Categories,
+	}
+
+	// Render the template
+	err = tpl.Render(w, r, "category.index", data)
+
+	if err != nil {
+		log.Printf("Error while rendering /pongo  %v", err.Error())
+		render.HTML(w, r, err.Error())
+		return
+	}
+}
+endsnippet
+
+
+## Convey ---
+snippet con "suite"
+func Test$1(t *testing.T){
+	// setup - HTTP client, DB reset etc ...
+
+
+	// vars used in tests ...
+
+	// $1 suite
+	Convey("$2", t, func(){
+			Convey("$3", func(){
+				So(2, ShouldEqual, 2)
+		})
+	})
+}
+endsnippet
+snippet con "basic"
+Convey("it $1", t, func() {
+	// So(resp.OrgID, ShouldEqual, 1)
+})
+endsnippet
+
+snippet so
+So( $1 )
+endsnippet
+
+## Testing ---
+snippet t "simple test"
+func Test$1(t *testing.T) {
+	assert.True(t, true, "Implement me")
+}
+endsnippet
+
+snippet ift "check whether in a test"
+if flag.Lookup("test.v") != nil {
+	// inside test env
+}
+endsnippet
+
+snippet test "suite"
+package specs
+
+import (
+	"testing"
+
+	"github.com/99designs/gqlgen/client"
+	pgx "github.com/TulsiTech/flow/server/internal/postgres"
+	"github.com/stretchr/testify/suite"
+)
+
+type $1TestSuite struct {
+	suite.Suite
+	Client *client.Client
+	// VariableThatShouldStartAtFive int
+}
+
+func (s *$1TestSuite) SetupSuite() {
+	// before entire suite ....
+	s.Client = client.New(gAPI)
+	pgx.ResetDBWithHTTP()
+}
+
+func (s *$1TestSuite) SetupTest() {
+	// before each test ...
+	// s.VariableThatShouldStartAtFive = 5
+}
+
+// Assertions
+func (s *$1TestSuite) Test$1() {
+	s.Equal(5, s.VariableThatShouldStartAtFive)
+}
+
+// ... more assertions here
+
+func (s *$1TestSuite) TearDownSuite() {
+	// after entire suite ...
+}
+
+func (s *$1TestSuite) TearDownTest() {
+	// after each test ...
+}
+
+// Run Suite
+func Test$1TestSuite(t *testing.T) {
+	suite.Run(t, new($1TestSuite))
+}
+endsnippet
+
+snippet test "function"
+func (s *$1Suite) Test$2(t *testing.T) {
+	$0
+}
+endsnippet
+
+snippet suite "suite setup"
+package $1
+
+import (
+	"testing"
+
+	runner "gopkg.in/mgutz/dat.v1/sqlx-runner"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/suite"
+)
+
+// $2Suite model
+type $2Suite struct {
+	suite.Suite
+	repo *repo
+	DB   *runner.DB
+}
+
+func (s *$2Suite) clearTables() {
+	s.repo.clearTables()
+}
+
+// SetupSuite sets up prep code to be run before the suite
+func (s *$2Suite) SetupSuite() {
+	setupDB()
+	s.repo = getRepo()
+}
+
+// SetupTest runs once before each test
+func (s *$2Suite) SetupTest() {
+	s.clearTables()
+}
+
+// TearDownTest runs once after each test
+func (s *$2Suite) TearDownTest() {
+	s.clearTables()
+}
+
+// TearDownSuite runs after all the tests in the suite
+func (s *$2Suite) TearDownSuite() {
+}
+
+//---------------------------------------------------- Tests
+
+$0
+
+//---------------------------------------------------- Tests
+
+// Test$3Suite - run the suite
+func Test$3Suite(t *testing.T) {
+	suite.Run(t, new($2Suite))
+}
+
+endsnippet
+
+snippet aeq "Equal"
+assert.Equal(s.T(), ${1:expected}, ${2:actual})
+endsnippet
+
+snippet aneq "Not Equal"
+assert.NotEqual(s.T(), ${1:expected}, ${2:actual})
+endsnippet
+
+snippet aerr "error is Nil"
+assert.Nil(s.T(), err)
+endsnippet
+
+snippet aerr "error is Not Nil"
+assert.NotNil(s.T(), err)
+endsnippet
+
+snippet t "suite test"
+func (s *${2:pkg}Suite) Test$1() {
+	$0
+}
+endsnippet
+
+snippet a "assert"
+assert.$1
+endsnippet
+
+
+snippet t "JSON API test"
+func (s *api$1Suite) Test$2() {
+	req, err := http.NewRequest("GET", "/${3:categories}", nil)
+	if err != nil {
+		s.T().Fatal(err)
+	}
+
+	// create a ResponseRecorder
+	rr := httptest.NewRecorder()
+
+	handler := http.HandlerFunc(env.$4Handler)
+
+
+	// serve content
+	handler.ServeHTTP(rr, req)
+
+	// assert status code
+	if status := rr.Code; status != http.StatusOK {
+		s.T().Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
+	// assert JSON content
+	// var catalog collection
+	// json.Unmarshal(rr.Body.Bytes(), &catalog)
+	// assert.Equal(s.T(), 16, len(catalog.Categories))
+}
+endsnippet
+
+
+## Error Handling ---
+snippet e "handle error"
+if err:= $1; err != nil {
+	logger.Printf("Error $1 %v \n", err.Error())
+}
+endsnippet
+
+snippet main "Main program" b
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("hello, world")
+}
+
+endsnippet
+
+snippet dir
+import "runtime"
+import "path"
+
+_, filename, _, ok := runtime.Caller(0)
+if !ok {
+	panic("No caller information")
+}
+
+dir := path.Dir(filename)
+endsnippet
+
+snippet comm
+//-----------------------------------------------------------
+// $0
+//-----------------------------------------------------------
+
+endsnippet
+
+## CLI / Flags ---
+snippet fl
+cli.${1:String}Flag{
+	Name: "$2",
+	Value: "$3",
+	EnvVar: "$4",
+},
+endsnippet
+
+snippet ife "if error" b
+if err := $1; err != nil {
+	// logger.Error("$1 failed", "error", err.Error())
+	// return err
+}
+endsnippet
+
+snippet perr "Print error" b
+if err != nil {
+	log.Printf("$1 %v", err)
+}
+endsnippet
+
+snippet cmd "single command config"
+cli.Command{
+	Name: "$1",
+	Aliases: []string{"$2"},
+	Usage: "USAGE: $1 <params...>",
+	Action: func(c *cli.Context) error {
+		if c.NArg() == 0 {
+			cli.ShowCommandHelp(c, "$1")
+			return nil
+		}
+
+		fmt.Printf("executing '$1' with %v", c.Args())
+
+		return nil
+	},
+}
+endsnippet
+
+snippet cmd "subcommand config"
+{
+	Name: "$1",
+	Aliases: []string{"$2"},
+	Usage: "USAGE: $1 <params...>",
+	Action: func(c *cli.Context) error {
+		if c.NArg() == 0 {
+			cli.ShowCommandHelp(c, "$1")
+			return nil
+		}
+
+		fmt.Printf("executing '$1' with %v", c.Args())
+
+		return nil
+	},
+},
+endsnippet
+
+snippet cmd "cli.Command with subCommands"
+// Commands returns an array of cli.Command objects
+func Commands() cli.Command {
+	return cli.Command{
+		Name: "$1",
+		Aliases: []string{"$2"},
+		Subcommands: subCommands(),
+		// Flags: flags(),
+	}
+}
+
+func subCommands() []cli.Command {
+	return []cli.Command{
+		{
+			Name: "child",
+			Aliases: []string{"ch"},
+			Action: func(c *cli.Context) error {
+				fmt.Printf("executing child command of $1")
+				return nil
+			},
+		},
+	}
+}
+
+endsnippet
+
+
+snippet lf "log struct details"
+log.Printf("$1 %#v \n", $2)
+endsnippet
+
+snippet jwt "extract JWT Token data"
+ctx := r.Context()
+
+jwtToken, ok := ctx.Value("jwt").(*jwt.Token)
+// log.Printf("JWT Token OK? %v, Token Valid? %v \n", ok, jwtToken.Valid)
+
+if !ok || !jwtToken.Valid {
+	lgr.Errorln("SaveOrg - JWT error")
+	render.Status(r, http.StatusUnauthorized)
+	return
+}
+
+claims := jwtToken.Claims
+id := claims["id"]
+email := claims["sub"]
+
+// log.Printf("Claims %+v, ID %v, Email %v", claims, id, email)
+endsnippet
+
+snippet claims "extract JWT Token data"
+ctx := r.Context()
+
+jwtToken, ok := ctx.Value("jwt").(*jwt.Token)
+// log.Printf("JWT Token OK? %v, Token Valid? %v \n", ok, jwtToken.Valid)
+
+if !ok || !jwtToken.Valid {
+	lgr.Errorln("SaveOrg - JWT error")
+	render.Status(r, http.StatusUnauthorized)
+	return
+}
+
+claims := jwtToken.Claims
+id := claims["id"]
+email := claims["sub"]
+
+// log.Printf("Claims %+v, ID %v, Email %v", claims, id, email)
+endsnippet
+
+
+## Forms ---
+snippet gin "form handler" b
+func $1(c *gin.Context) {
+	var form $2
+
+	if c.Bind(&form) == nil {
+		log.Printf("Form: %v\n", form)
+	}
+
+}
+endsnippet
+
+snippet form "full form template"
+package $1
+
+import (
+	"gopkg.in/go-playground/validator.v9"
+)
+
+// use a single instance of Validate, it caches struct info
+var validate *validator.Validate
+
+func init() {
+	validate = validator.New()
+
+	validate.RegisterTagNameFunc(func(fld reflect.StructField) string {
+		name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
+
+		if name == "-" {
+			return ""
+		}
+
+		return name
+	})
+}
+
+// $2 is the form
+type $2 struct {
+	Body              io.ReadCloser
+	FirstName         string `json:"firstName" fako:"first_name" validate:"gte=3,lte=50"`
+	Highlights        map[string]string
+
+	model  *model
+	errors map[string]string
+}
+
+func logError(msg, err string) {
+	lgr.Errorf("=========== %v %v", msg, err)
+}
+
+func (f *$2) process() error {
+	err := f.parse()
+
+	if err != nil {
+		logError("Error parsing $2", err.Error())
+		return err
+	}
+
+	err = f.validateInputs()
+	if err != nil {
+		logError("Form validation errors in $2", err.Error())
+		return err
+	}
+
+	// Additional proceessing
+
+
+	return nil
+}
+
+func (f *$2) parse() error {
+	decoder := json.NewDecoder(f.Body)
+	err := decoder.Decode(&f)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+
+func (f *$2) initErrors() {
+	if len(f.errors) == 0 {
+		f.errors = map[string]string{}
+	}
+}
+
+func (f *$2) validateInputs() error {
+	err := validate.Struct(f)
+
+	if err != nil {
+		for _, e := range err.(validator.ValidationErrors) {
+			jTag := e.Field()
+			msgs := errorMessages["$2"]
+
+			f.addValidationError(jTag, msgs[jTag])
+		}
+
+		return err
+	}
+
+	return nil
+}
+
+// addValidationError is a method on the $2 type
+func (f *$2) addValidationError(key, msg string) {
+	f.initErrors()
+
+	f.errors[key] = msg
+}
+
+func (f *$2) submit() error {
+	var err error
+
+	// Do actual submit here
+	// err := f.model.DatDB.$2()
+
+	if err != nil {
+		return err
+	}
+
+
+	return nil
+}
+
+
+func (f *$2) errorData() map[string]interface{} {
+	return map[string]interface{}{
+		`Header`:     `Fix errors below`,
+		"Status":     "error",
+		`Message`:    `Form has errors as below`,
+		`Note`:       `Bad boy!`,
+		`Errors`:     f.errors,
+		`Highlights`: f.Highlights,
+		`Form`:       f,
+	}
+}
+
+endsnippet
+
+## Files/Dirs ---
+snippet glob "glob files"
+srcDir := filepath.Join(...)
+files, _ := filepath.Glob(srcDir + "/*.yml")
+endsnippet
+
+snippet filename "get file name with/without extension"
+basename := filepath.Base(f)
+name := strings.TrimSuffix(basename, filepath.Ext(basename))
+endsnippet
+
+## JSON ---
+snippet jsonu "unmarshal JSON"
+res := ${1:struct}{}
+json.Unmarshal([]byte(${2:jsonstring}), &res)
+endsnippet
+
+snippet ju "unmarshal JSON"
+res := ${1:struct}{}
+err := json.Unmarshal([]byte(${2:jsonstring}), &res)
+
+if err != nil {
+	logger.Error("unmarshalling JSON", err)
+}
+endsnippet
+
+snippet jm "json marshal"
+res, err := json.Marshal($1)
+
+if err != nil {
+	logger.Error("marshalling JSON", err)
+}
+endsnippet
+
+
+snippet wf "log WithFields"
+lgr.WithFields(logrus.Fields{
+	"$1": $2,
+}).Print("$0")
+endsnippet
+
+
+
+
+## Handlers ---
+snippet h "Testable Handler" b
+func $1() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Hi there, I love %s!", db.GetBacon())
+	})
+}
+endsnippet
+
+snippet h "Testable Template Handler" b
+// $1 displays the `$2` template with given data
+func $1(w http.ResponseWriter, r *http.Request) {
+	data := map[string]string{
+		"Title": "$1 template - $2",
+	}
+
+	tmpl.Render(w, "$2", data)
+}
+endsnippet
+
+snippet h "http Handler" b
+// $1 - ${2:is a function}
+func $1(w http.ResponseWriter, r *http.Request) {
+	$0
+}
+endsnippet
+
+snippet wr "handler params" b
+w http.ResponseWriter, r *http.Request
+endsnippet
+
+snippet tmpl "render templte" b
+	data := map[string]string{
+		"Title":     "$1",
+	}
+
+	tmpl.Render(w, "$0", data)
+endsnippet
+
+snippet ht "http Handler that renders a template" b
+// $1 - ${2:is a function}
+func $1(w http.ResponseWriter, r *http.Request) {
+	data := map[string]string{
+		"Title":     "${3:Welcome to $1}",
+	}
+
+	tmpl.Render(w, "$0", data)
+}
+endsnippet
+
+snippet hnd "form handler" b
+// ${1:ActionName} is the controller action for ${2:FormName} form
+func $1(w http.ResponseWriter, r *http.Request) {
+	form := new($2Form)
+	err := r.ParseForm()
+
+	if err != nil {
+		log.Printf("$2 Form Parse error %v", err)
+	}
+
+	// r.PostForm is a map of our POST form values
+	err = decoder.Decode(form, r.PostForm)
+
+	if err != nil {
+		log.Printf("$2 Form Decode error %v", err)
+	}
+
+	form.Validate()
+
+	if form.HasErrors() {
+		tmpl.Render(w, "${2/.*/\l$0/}s.new", ${2/.*/\u$0/}ErrorData(form))
+		return
+	}
+
+	record, err := repo.Create$2(form)
+
+	if err != nil {
+		log.Printf("Error while saving registration to DB %v", err)
+
+		/*
+		rgx, _ := regexp.Compile("already exists")
+		if rgx.MatchString(err.Error()) {
+			errorMsg := fmt.Sprintf("Email '%v' is already registered", form.Email)
+			fl := flash.ShowError("Please login", errorMsg)
+
+			session.PutObject(r, "flash", fl)
+			http.Redirect(w, r, fullRoute(loginRte), 301)
+			return
+		}
+		*/
+		log.Println("Token", record)
+	}
+
+	tmpl.Render(w, "${2/.*/\l$0/}s", signupSuccessData(confTkn, form.Email))
+}
+
+func ${2/.*/\l$0/}SuccessData() map[string]string {
+
+	return map[string]string{
+		"Status":  "success",
+		"Message": "Your registration was successful.",
+		"Note":    "All good!",
+	}
+}
+
+func ${2/.*/\l$0/}ErrorData(f *$2Form) map[string]interface{} {
+	return map[string]interface{}{
+		"Header":     "Fix errors below",
+		"Status":     "error",
+		"Message":    "Form has errors as below",
+		"Note":       "Bad boy!",
+		"Errors":     f.Errors,
+		"Highlights": f.Highlights,
+		"Form":       f,
+	}
+}
+
+endsnippet
+snippet handler "template handler"
+// From 'Go Programming Blueprints' book, Page 28
+
+// templ represents a single template
+type templateHandler struct {
+	once     sync.Once
+	filename string
+	templ    *template.Template
+}
+
+func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	t.once.Do(func() {
+		t.templ = template.Must(template.ParseFiles(filepath.Join("templates", t.filename)))
+	})
+
+	t.templ.Execute(w, nil)
+}
+endsnippet
+
+snippet handler "plain"
+func ($1) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	$0
+}
+endsnippet
+
+snippet handler "HTTP"
+func ${1:ServeHTTP}(w http.ResponseWriter, r *http.Request) {
+	$0
+}
+endsnippet
+
+## YAML Reader ---
+snippet yaml "read YML file"
+yamlFile, err := ioutil.ReadFile(f)
+if err != nil {
+	log.Printf("Error while reading YAML file %v \n", err.Error())
+}
+
+any := map[string]interface{}{}
+err = yaml.Unmarshal(yamlFile, &any)
+basename := filepath.Base(f)
+name := strings.TrimSuffix(basename, filepath.Ext(basename))
+
+fmt.Printf("%v- File: %v \n Data: %+v\n\n", idx, name, any)
+endsnippet
+
+snippet tt "testing"
+fmt.Println("Testing Boy")
+endsnippet
+
+
+snippet action "feature action"
+package $1
+
+import (
+	"net/http"
+
+	"github.com/TulsiTech/$2/internal/core/utils"
+	"github.com/go-chi/render"
+)
+
+
+// $3Form is a struct
+type $3Form struct {
+}
+
+type $3Response struct {
+}
+
+func (cr *$3Response) Render(w http.ResponseWriter, r *http.Request) error {
+	// Pre-processing before a response is marshalled and sent across the wire
+	// rd.Elapsed = 10
+	return nil
+}
+
+func new$3Response() *$3Response {
+	resp := &$3Response{}
+
+	return resp
+}
+
+func (f *$3Form) Bind(r *http.Request) error {
+	// ok, err := govalidator.ValidateStruct(f)
+
+	// if !ok {
+		// return err
+	// }
+
+	return nil
+}
+
+func (c *Controller) $3Handler(w http.ResponseWriter, r *http.Request) {
+	f := &$3Form{}
+
+	if err := render.Bind(r, f); err != nil {
+		render.Render(w, r, utils.ErrInvalidRequest(err))
+		return
+	}
+
+
+	// evts, err := c.repo.eventsByDistance(f)
+
+	// if err != nil {
+		// render.Render(w, r, utils.ErrInvalidRequest(err))
+		// return
+	// }
+
+	// if err := render.Render(w, r, new$3Response(evts)); err != nil {
+		// render.Render(w, r, utils.ErrRender(err))
+		// return
+	// }
+
+	render.JSON(w, r, map[string]string{"Hello": "World"})
+}
+endsnippet
+
+snippet ctrl "Controller"
+package $1
+
+import (
+	"github.com/TulsiTech/$2/internal/core/utils"
+	"github.com/go-chi/chi"
+	"gopkg.in/mgutz/dat.v2/sqlx-runner"
+	"gopkg.in/olivere/elastic.v6"
+)
+
+const (
+	tableName = "$3"
+)
+
+var ctrl *Controller
+
+// the `repo` Interface
+type model interface {
+}
+
+// the `repo` Implementation
+type store struct {
+	datDB    *runner.DB
+	esClient *elastic.Client
+}
+
+// Controller model
+type Controller struct {
+	repo     model
+	esClient *elastic.Client
+}
+
+func Init(db *runner.DB, esc *elastic.Client) *Controller {
+	ctrl = &Controller{
+		repo: &store{
+			datDB:    db,
+			esClient: esc,
+		},
+	}
+
+	// Other init stuff ....
+
+	return ctrl
+}
+
+// Endpoints wraps JSON points for this feature
+func (c *Controller) Endpoints() chi.Router {
+	r := chi.NewRouter()
+
+	return r
+}
+
+// Pages wraps HTML pages for this feature
+func (c *Controller) Pages() chi.Router {
+	r := chi.NewRouter()
+
+	return r
+}
+
+// Templates wraps all the Pongo templates for this feature
+func (c *Controller) Templates() (string, map[string]string) {
+	return "$1", map[string]string{}
+}
+endsnippet
+
+snippet store "Feature store"
+// Database record
+type record struct {
+}
+
+// used as `repo` in Controller
+type model interface {
+}
+
+
+endsnippet
+
+snippet todo
+// TODO: ${1:Handle this} $0
+endsnippet
+
+snippet cfg
+cfg := config.AppConfig()
+$0
+endsnippet
+
+
+## Store Methods ---
+snippet db "return ([]byte, error)"
+// $1 is a DBStore method
+func (dbs *DBStore) $1($2) ([]byte, error) {
+	var b []byte
+
+	return b, nil
+}
+$0
+endsnippet
+
+snippet store "interface"
+package $1
+
+import (
+	"github.com/TulsiTech/bourbon/server/internal/core/config"
+	"github.com/go-redis/redis"
+	"gopkg.in/mgutz/dat.v2/sqlx-runner"
+	"gopkg.in/olivere/elastic.v6"
+)
+
+type iStore interface {
+	iCommand
+	iQuery
+	iSeed
+	iCache
+}
+
+type store struct {
+	cfg    *config.Settings
+	datDB  *runner.DB
+	cache  *redis.Client
+	search *elastic.Client
+}
+$0
+endsnippet
+
+snippet svc "JSON, HTML Services"
+// import "github.com/go-chi/chi"
+
+// JSONService is a function
+func (svc *Service) JSONService() chi.Router {
+	r := chi.NewRouter()
+
+	return r
+}
+
+// HTMLService is a function
+func (svc *Service) HTMLService() chi.Router {
+	return chi.NewRouter()
+}
+endsnippet
+
+
+snippet wow
+${1:Text}`!p snip.rv = (75-2*len(t[1]))*' '+t[1].upper()`
+endsnippet
+
+snippet title "Titlelize in the Transformation"
+${1:a text}
+${1/\w+\s*/\u$0/g}
+endsnippet
+
+snippet desc
+Convey("$1", func(){
+	Convey("it $2", func(){
+		// c.MustPost(q, &resp)
+		// So(resp, ShouldEqual, "siva")
+		$0
+	})
+})
+endsnippet
+
+snippet it
+Convey("it $1", func(){
+	// c.MustPost(q, &resp)
+	// So(resp, ShouldEqual, "siva")
+	$0
+})
+endsnippet
+
+snippet ase
+So($1, ShouldEqual, $2)
+endsnippet
+
+snippet ifen
+if err != nil {
+	logger.Log("$1 error", err)
+}
+endsnippet
+
+snippet ft
+src := filepath.Join(core.DDDTemplates(), "$1.tpl")
+dest := filepath.Join(s.Root, "$1.go")
+
+data := map[string]interface{}{
+	"src":                src,
+	"dest":               dest,
+}
+
+// core.MakeDir(filepath.Join(svc.Dir, "pkg/endpoint"))
+err := core.FastTemplate(src, dest, data)
+if err != nil {
+	log.Printf("FIRE FIRE! %v", err)
+}
+
+endsnippet
+
+snippet sa
+$1 := []string{}
+$0
+endsnippet
+
+snippet app
+$1 = append($1, $0)
+endsnippet
+
+snippet data
+"$1": strings.Join($2, "\n"),
+endsnippet
+
+snippet fj
+filepath.Join($1, $2)$0
+endsnippet
+
+snippet sj
+strings.Join($1, $2)$0
+endsnippet
+
+snippet csv
+strings.Join($1, ", ")$0
+endsnippet
+
+snippet lines
+strings.Join($1, "\n")$0
+endsnippet
+
+snippet genie
+package kx
+
+type $1Genie struct{
+	Config
+	Service
+}
+
+func (g *$1Genie) Generate() {
+
+}
+
+endsnippet
+
+snippet pp
+core.BlockPrint("$1", $2)
+endsnippet
+
+snippet cons "constructor"
+
+func New$1($2) *$1 {
+	return &$1{}
+}
+
+endsnippet
+
+snippet tt "table test"
+func Test$1(t *testing.T) {
+	tests := map[string]struct {
+		input string
+		want  bool
+	}{
+		"simple":    {"locationId", false},
+		// "primitive": {"price:float", false},
+		// "model":     {"mgr hr.Manager", false},
+		// "arrays":    {"list []library.Book", true},
+	}
+
+	for name, tc := range tests {
+		got := NewParam(tc.input).IsArray
+
+		if !reflect.DeepEqual(tc.want, got) {
+		t.Fatalf("%s: expected: %v, got: %v", name, tc.want, got)
+		}
+	}
+}
+endsnippet
+
+snippet list
+list := []string{$0}
+endsnippet
+
+snippet klog
+	log "github.com/go-kit/kit/log"
+endsnippet
+
+snippet command "mitchellh/cli Command"
+package ${1:main}
+
+import "fmt"
+
+type $2Command struct{}
+
+func (t *$2Command) Help() string {
+	return "`!p snip.rv = t[2].lower()` [arg0] [arg2] ..."
+}
+
+func (t *$2Command) Run(args []string) int {
+	fmt.Println("`!p snip.rv = t[2].lower()`", args)
+	return 0
+}
+
+func (t *$2Command) Synopsis() string {
+	return "A sample command that says `!p snip.rv = t[2].lower()` on stdout"
+}
+endsnippet
+
+snippet svc "service interface"
+type Service interface {
+
+}
+
+type service struct {
+	*env.Config
+}
+
+func NewService(cfg *env.Config) Service {
+	return &service{cfg}
+}
+endsnippet
+
+snippet repo
+type Repository interface {
+
+}
+
+type repo struct {
+	*env.Config
+}
+
+func NewRepository(cfg *env.Config) Service {
+	return &service{cfg}
+}
+endsnippet
+
+snippet x
+`!p
+
+snip.rv = "hello"
+`
+endsnippet
+
+# snippet ent "imports"
+# import (
+# 	"github.com/facebook/ent"
+# 	"github.com/facebook/ent/schema/field"
+# )
+# endsnippet
+
+snippet ent "fields"
+return []ent.Field{
+field.UUID("id", uuid.UUID{}).
+	Default(uuid.New),
+		// field.String("name"),
+		// field.Int("postal_code").Unique(),
+	$0
+}
+endsnippet
+
+snippet ent "edges"
+// "github.com/facebook/ent/schema/edge"
+return []ent.Edge{
+			edge.To("pets", Pet.Type),
+}
+endsnippet
+
+snippet id "ent.UUID"
+field.UUID("id", uuid.UUID{}).
+	Default(uuid.New),
+endsnippet
+
+snippet ll
+logger.Log("$1", $2)
+$0
+endsnippet
+
+snippet lle
+logger.Log("$1 error", err)
+endsnippet
+
+snippet le
+logger.Log("$1 error", err)
+endsnippet
+
+snippet kitlog "import"
+kitlog "github.com/go-kit/kit/log"
+endsnippet

@@ -1,0 +1,68 @@
+snippet crud
+// consignment-service/proto/consignment/consignment.proto
+syntax = "proto3";
+
+// package `!p snip.rv=t[1][0:1].lower()`;
+
+service $1 {
+	rpc Create(CreateRequest) returns (CreateResponse) {}
+	rpc Read(ReadRequest) returns (ReadResponse) {}
+	rpc Update(UpdateRequest) returns (UpdateResponse) {}
+	rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+
+	// rpc Search(SearchRequest) returns (SearchResponse) {}
+}
+
+message CreateRequest {}
+message CreateResponse {}
+
+message ReadRequest {}
+message ReadResponse {}
+
+message UpdateRequest {}
+message UpdateResponse {}
+
+message DeleteRequest {}
+message DeleteResponse {}
+
+// message SearchRequest {}
+// message SearchResponse {}
+endsnippet
+	
+snippet msg "message type"
+message $1 {
+	$0
+}
+endsnippet
+
+snippet comm
+// ----------------------------------------------------------------------------
+// $0
+// ----------------------------------------------------------------------------
+endsnippet
+
+snippet rpc "rpc method"
+rpc $1(Request) returns (Response);
+endsnippet
+
+snippet me "rpc method"
+rpc $1(Request) returns (Response);
+endsnippet
+
+snippet svc "service"
+service $1 {
+	$0
+}
+
+message Request {}
+
+message Response {}
+endsnippet
+
+snippet pkg
+package $0;
+endsnippet
+
+snippet syn
+syntax = "proto3";
+endsnippet

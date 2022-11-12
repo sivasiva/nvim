@@ -1,0 +1,90 @@
+extends html
+
+snippet co "content"
+{% block content %}
+	$0
+{% endblock content %}
+endsnippet
+
+snippet tmpl "template skeleton"
+{% extends "../common/tpl/base_main.tpl" %}
+
+{% block content %}
+
+	$0
+
+{% endblock %}
+endsnippet
+
+snippet bl "block"
+{% block ${1:content} %}
+	$0
+{% endblock $1 %}
+endsnippet
+
+snippet ex "extends"
+{% extends "$1" %}
+
+$0
+endsnippet
+
+snippet for "for loop"
+{% for $1 in $2 %}
+	$0
+{% endfor %}
+endsnippet
+
+snippet ife "if elif end"
+{% if $1 %}
+	<!-- if -->
+{% elif $2 %}
+	<!-- elif 1 -->
+{% else %}
+	<!-- else -->
+{% endif %}
+endsnippet
+
+snippet filter "filter block"
+{% filter ${1:force_escape|lower} %}
+	This text will be HTML-escaped, and will appear in all lowercase.
+{% endfilter %}
+endsnippet
+
+snippet for "for..empty"
+{% for $1 in $2 %}
+	<li>{{ $3 }}</li>
+{% empty %}
+	<li>${4:Sorry, there are no items}</li>
+{% endfor %}
+endsnippet
+
+snippet unless "if not" b
+{% if not $1 or $2 %}
+	$0
+{% endif %}
+endsnippet
+
+snippet ifn "if not" b
+{% if not $1 or $2 %}
+	$0
+{% endif %}
+endsnippet
+
+snippet inc "include template" b
+{% include "$1" %}
+$0
+endsnippet
+
+snippet lorem "generate lorem text" b
+{% lorem ${1:3} ${2:p} %}
+endsnippet
+
+snippet time "output time" b
+{% now "Mon Jan 2 15:04:05 -0700 MST 2006" %}
+endsnippet
+
+snippet now "output time" b
+{% now "Mon Jan 2 15:04:05 -0700 MST 2006" %}
+endsnippet
+
+

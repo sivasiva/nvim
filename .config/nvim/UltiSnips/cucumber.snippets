@@ -1,0 +1,137 @@
+snippet j "JSON should be" b
+Then the JSON should be:
+	"""
+	{
+		"key": "value"
+	}
+	"""
+Then the JSON at "path" should be:
+	"""
+	[
+		"entry",
+		"entry"
+	]
+	"""
+Then the JSON should be {"key":"value"}
+Then the JSON at "path" should be {"key":"value"}
+Then the JSON should be ["entry","entry"]
+Then the JSON at "path" should be ["entry","entry"]
+Then the JSON at "path" should be "string"
+Then the JSON at "path" should be 10
+Then the JSON at "path" should be 10.0
+Then the JSON at "path" should be 1e+1
+Then the JSON at "path" should be true
+Then the JSON at "path" should be false
+Then the JSON at "path" should be null
+endsnippet
+
+snippet j "JSON should include" b
+Then the JSON should include:
+	"""
+	{
+		"key": "value"
+	}
+	"""
+Then the JSON at "path" should include:
+	"""
+	[
+		"entry",
+		"entry"
+	]
+	"""
+
+Then the JSON should include {"key":"value"}
+Then the JSON at "path" should include {"key":"value"}
+Then the JSON should include ["entry","entry"]
+Then the JSON at "path" should include ["entry","entry"]
+Then the JSON should include "string"
+Then the JSON at "path" should include "string"
+Then the JSON should include 10
+Then the JSON at "path" should include 10
+Then the JSON should include 10.0
+Then the JSON at "path" should include 10.0
+Then the JSON should include 1e+1
+Then the JSON at "path" should include 1e+1
+Then the JSON should include true
+Then the JSON at "path" should include true
+Then the JSON should include false
+Then the JSON at "path" should include false
+Then the JSON should include null
+Then the JSON at "path" should include null
+endsnippet
+
+snippet j "JSON should have path/entry" b
+Then the JSON should have "path"
+
+Then the JSON should be a hash
+Then the JSON at "path" should be an array
+Then the JSON at "path" should be a float
+
+Then the JSON should have 1 entry
+Then the JSON at "path" should have 2 entries
+Then the JSON should have 3 keys
+Then the JSON should have 4 whatevers
+endsnippet
+
+snippet j "JSON keep for later use" b
+Feature: User API
+	Scenario: Index action includes full user JSON
+		Given the following user exists:
+			| id | first_name | last_name |
+			| 1  | Steve      | Richert   |
+		And I visit "/users/1.json"
+		And I keep the JSON response as "USER_1"
+		When I visit "/users.json"
+		Then the JSON response should be:
+			"""
+			[
+				%{USER_1}
+			]
+			"""
+
+Given I keep the JSON response at "first_name" as "FIRST_NAME"
+Then the JSON response at "0/first_name" should be:
+	"""
+	%{FIRST_NAME}
+	"""
+Then the JSON response at "0/first_name" should be %{FIRST_NAME}
+endsnippet
+
+
+snippet sc "Scenario"
+Scenario: $1
+Given $0
+endsnippet
+
+snippet bg "Background"
+Background:
+	Given the following users exist:
+		| id | first_name | last_name |
+		| 1  | Steve      | Richert   |
+		| 2  | Catie      | Richert   |
+	And "Steve Richert" is friends with "Catie Richert"
+endsnippet
+
+snippet f "Feature scaffold"
+Feature: $1
+	Scenario: $1 success
+	Scenario: $1 failure; ${2:condition}
+endsnippet
+
+snippet s "Scenario"
+Scenario: $1; $0
+end
+endsnippet
+
+snippet f "scaffold"
+Given $1
+When $2
+Then $3
+endsnippet
+
+snippet f "table"
+Given the following users:
+	| id | first_name | last_name |
+	| 1  | Steve      | Richert   |
+	| 2  | Catie      | Richert   |
+endsnippet

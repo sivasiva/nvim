@@ -1,0 +1,49 @@
+extends html
+
+snippet each "each loop"
+{{#each $1 as |$2|}}
+	<p id="para-{{ @index }}">{{this}}</p>
+{{else}}
+	<p class="empty">No content</p>
+{{/each}}
+endsnippet
+
+snippet each "from map"
+{{#each users as |user key|}}
+	{{#each user.books as |book bookId|}}
+		User: {{key}} Book: {{bookId}}
+	{{/each}}
+{{/each}}
+endsnippet
+
+
+snippet partial "insert partial"
+
+{{> ${1:footer} }}
+
+endsnippet
+
+snippet un "unless"
+{{#unless $1}}
+	$0
+{{/unless}}
+endsnippet
+
+snippet with "with block"
+{{#with author}}
+	<!-- `firstName` and `lastName` come from `author` -->
+	<h2>By {{firstName}} {{lastName}}</h2>
+{{else}}
+	<p class="empty">No author details</p>
+{{/with}}
+endsnippet
+
+snippet log "log"
+{{ log "$1" }}
+endsnippet
+
+snippet eq "render if equal"
+{{#equal foo "bar"}}foo is bar{{/equal}}
+endsnippet
+
+

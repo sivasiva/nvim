@@ -1,0 +1,1653 @@
+snippet mex
+module.exports = ${1:Constant}
+endsnippet
+snippet cl
+console.log "${1:msg}", ${2:addl}
+endsnippet
+snippet cw
+console.warn "${1:msg}", ${2:addl}
+endsnippet
+snippet comm "simple"
+#----------------------------------------------
+# ${1}
+#----------------------------------------------
+endsnippet
+snippet comm "todo"
+#----------------------------------------------
+# TODO: $1
+#----------------------------------------------
+endsnippet
+snippet comm "ref"
+#----------------------------------------------
+# Ref: $1
+#----------------------------------------------
+endsnippet
+snippet alog
+console.log '[ACTION] ${1}', ${2}
+endsnippet
+snippet slog
+console.log '[STORE] ${1}', ${2}
+endsnippet
+snippet rr
+${1:asset} = require( './$1' )
+endsnippet
+snippet str
+JSON.stringify( $1, null, 2 )
+endsnippet
+snippet cj
+console.log JSON.stringify( $1, null, 2 )
+endsnippet
+snippet c-
+console.log '------------------------------------'
+endsnippet
+snippet clf
+console.log "`!p snip.rv = snip.fn`", "$1"$0
+endsnippet
+snippet cg
+console.group "$1"
+$0
+console.groupEnd "$1"
+endsnippet
+snippet ct
+console.table $1
+endsnippet
+snippet on
+onClick={ @$1.bind( this, $2 ) }$0
+endsnippet
+snippet trim
+.replace( /^\s+|\s+$/g, "" )
+endsnippet
+snippet gsub
+.replace( '$1', '$2' )
+endsnippet
+snippet rc
+cx = require( 'classnames' )
+endsnippet
+snippet ife
+if $1 then $2 else $3
+endsnippet
+snippet fn
+$1 ${2::} ( $3 ) ->
+	$0
+endsnippet
+snippet r
+${1:Constant} = require( "./$1" )$0
+endsnippet
+snippet req
+${1:Constant} = require './${2:components/}$1' $0
+endsnippet
+snippet when
+when '${1}'
+	<${2} $0 />
+endsnippet
+snippet map "no var"
+${1}.map ( ${2}, idx )->
+	$0
+endsnippet
+snippet map "with var"
+${1} = ${2}.map ( ${3}, idx )=>
+	${4}
+$0
+endsnippet
+snippet map "tr - with delete"
+$1 = $2.map ( $3, idx )=>
+	<tr key={ idx }>
+		<td>{ idx + 1 }</td>
+		<td>{ $3.name }</td>
+		<td>
+			<a href="javascript:void(0)" onClick={ @remove.bind( this, idx ) }>
+				<i className="icon large red remove circle"/>
+			</a>
+		</td>
+	</tr>
+endsnippet
+snippet map "tr - simple"
+$1 = $2.map ( $3, idx )=>
+	<tr key={ idx }>
+		<td>{ idx + 1 }</td>
+		<td>{ $3.name }</td>
+	</tr>
+endsnippet
+snippet sw
+switch $1
+	when $2
+		$0
+	else
+endsnippet
+snippet < "simple"
+<${1:Tag} $0 />
+endsnippet
+snippet	< "with children"
+<${1:Tag} $0>
+	${2}
+</$1>
+endsnippet
+snippet uc
+${1:classes} = Utils.classNames( ${2} )
+endsnippet
+snippet mod
+$1 =
+
+
+
+module.exports = $1
+endsnippet
+snippet for
+for $1, idx in $2
+	$0
+endsnippet
+snippet class
+class $1
+	constructor: (  ) ->
+		# initialize class
+
+module.exports = $1
+endsnippet
+snippet fld
+<div className="form-group input-inline">
+	<label htmlFor="$1">$2</label>
+	<input type="text" className="form-control input-lg width-50" maxLength="100" />
+	<button className="helper-text-icon">?</button>
+	<div className="character-count hidden">
+		<span className="character-count-label"/>
+	</div>
+</div>
+endsnippet
+snippet form "html"
+<div ref="form" className="ui small form">
+	<h4 className="ui dividing header">${1}</h4>
+</div>
+endsnippet
+snippet form "configure"
+@form = $( @refs.form )
+
+@form.form
+	fields:
+		name: 'empty'
+	inline: true
+	on: 'submit'
+endsnippet
+snippet form "validate"
+if @form.form( 'is valid' )
+	v = @form.form( 'get values' )
+	console.log "Form Details", v
+
+	@props.${2:action}( v )
+endsnippet
+snippet form "wizard stepper"
+if @form.form( 'is valid' )
+	formData = @form.form( 'get values' )
+	console.log "Form Details", formData
+
+	profile = @props.institute.profile
+	nextStep = Config.nextStep( profile )
+
+	profile.${1} = formData
+	profile.status      = nextStep
+
+	@getFlux().actions.institute.saveProfile( @props.institute.id, profile )
+endsnippet
+snippet f "single"
+<div className="required field">
+	<label htmlFor="${1:name}">${2:label}</label>
+	<input ref="$1" id="$1" type="${3:text}" name="$1" placeholder="$2" />
+</div>
+endsnippet
+snippet f "multiple fields"
+<div className="${1:two} fields">
+	${2}
+</div>
+endsnippet
+snippet f "checkbox"
+<div className="required field">
+	<label htmlFor="${1:name}">${2}</label>
+	<div className="ui checkbox">
+		<input type="checkbox" name="$1" />
+		<label>${3}</label>
+	</div>
+</div>
+endsnippet
+snippet f "radio group"
+<div className="required field">
+	<label htmlFor="${1:name}">${2}</label>
+	<div className="grouped fields">
+		<div className="field">
+			<div className="ui radio checkbox">
+				<input type="radio" name="$1" className="hidden" defaultChecked={ true } />
+				<label>${3}</label>
+			</div>
+		</div>
+		<div className="field">
+			<div className="ui radio checkbox">
+				<input type="radio" name="$1" className="hidden" />
+				<label>${4}</label>
+			</div>
+		</div>
+	</div>
+</div>
+endsnippet
+snippet f "radio"
+<div className="field">
+	<div className="ui radio checkbox">
+		<input type="radio" name="${1:name}" className="hidden" />
+		<label>${2}</label>
+	</div>
+</div>
+$0
+endsnippet
+snippet f "radio js"
+$( '${1:.ui.checkbox}' ).checkbox()
+endsnippet
+snippet sel "html"
+<div className="required field">
+	<label>${1:label}</label>
+	<div id="${2:model}dd" className="ui fluid selection dropdown">
+		<input ref="$2" type="hidden" name="$2" id="$2" />
+		<div className="default text">$1</div>
+		<i className="dropdown icon"></i>
+		<div className="menu">
+			{
+				$2Options
+			}
+		</div>
+	</div>
+</div>
+endsnippet
+snippet sel "options"
+${1:model}Options = for item, idx in ${2:[]}
+	<div key={ idx } className="item" data-value={ idx }>{ item }</div>
+endsnippet
+snippet msg "positive"
+<PositiveMessage title="${1:title}">
+	<p>${2:msg}</p>
+</PositiveMessage>
+endsnippet
+snippet msg "error"
+<ErrorMessage title="${1:title}">
+	<p>${2:msg}</p>
+</ErrorMessage>
+endsnippet
+snippet rule
+${1:name}:
+	identifier: '$1'
+	rules: [
+		{
+			type: '${2:empty}'
+			prompt: '${3:Name} is required'
+		}
+	]
+$0
+endsnippet
+snippet f "textarea - regular"
+<div className="required field">
+	<label htmlFor="${1:field}">${2:label}</label>
+	<textarea ref="$1" id="$1" name="$1" placeholder="Please enter one per line"></textarea>
+</div>
+endsnippet
+snippet f "textarea - short"
+<div className="required field">
+	<label htmlFor="${1:field}">${2:label}</label>
+	<textarea ref="$1" id="$1" name="$1" rows="2"></textarea>
+</div>
+endsnippet
+snippet f "dropdown - single"
+<div className="required field">
+	<label htmlFor="$1">$2</label>
+	<div id="$1-select" className="ui selection dropdown">
+		<input type="hidden" name="$1" />
+		<i className="dropdown icon"></i>
+		<div className="default text">Select $2</div>
+		<div className="menu">
+			{
+				for $1, idx in ${0:[]}
+					<div key="$1-#{ idx + 1 }" className="item" data-value={ $1.id }>{ $1.name }</div>
+			}
+		</div>
+	</div>
+</div>
+endsnippet
+snippet f "dropdown - multiple"
+<div className="required field">
+	<div id="$1" className="ui fluid multiple search selection dropdown">
+		<input type="hidden" name="$1" />
+		<i className="dropdown icon"></i>
+		<div className="default text">$2</div>
+		<div className="menu">
+			{
+				for $3, idx in []
+					<div key="$3-#{ idx }" className="item" data-value={ ${4:$3} }>{ ${5:$3} }</div>
+			}
+		</div>
+	</div>
+</div>
+endsnippet
+snippet a "default"
+<a href=${1}>${2}</a>
+endsnippet
+snippet a "item"
+<a href="javascript:void(0)" className="item">${2}</a>
+endsnippet
+snippet a "icon"
+<a href="javascript:void(0)" onClick={ @${3} }><i className="icon ${2:remove}"/></a>
+endsnippet
+snippet a "remove"
+<a href="javascript:void(0)" onClick={ @remove${1}.bind( this, idx ) }><i className="icon remove circle"/></a>
+endsnippet
+snippet a "cancel"
+<a href="javascript:void(0)" onClick={ @cancel } className="ui mini cancel button">Cancel</a>
+endsnippet
+snippet b "bind"
+<button className="ui button" onClick={ @${1:function}.bind( this, ${2:params} ) }>$3</button>
+endsnippet
+snippet b "right arrow"
+<button className="${1:ui tiny orange right labeled icon button}" onClick={ @${2:handleClick} }>
+	${4:Save & Continue}
+	<i className="${3:right arrow icon}"></i>
+</button>
+endsnippet
+snippet b "primary labeled"
+<button className="${1:ui primary labeled icon button}" onClick={ @${2:handleClick} }>
+	<i className="${3:add squared icon}"></i>
+	${4:Add Another Student}
+</button>
+endsnippet
+snippet b "basic"
+<button className="${1:ui basic button}" onClick={ @${2:handleClick} }>
+	$0
+</button>
+endsnippet
+snippet b "cancel"
+<button onClick={ @cancel } className="ui mini cancel button">Cancel</button>
+endsnippet
+snippet b "cancel - icon"
+<button className="ui mini yellow left labeled icon button" onClick={ @$1 }>
+	<i className="red remove icon"></i>
+	$0
+</button>
+endsnippet
+snippet b "anchor"
+<a href="#" className="ui button" onClick={ @handleClick }>${1}</a>
+endsnippet
+snippet b "yes or no"
+<div className="ui buttons">
+	<button className="ui button" onClick={ @toggle${1} }>No</button>
+	<div classNames="or" data-text="or"></div>
+	<button className="ui positive button" onClick={ @toggle$1 }>Yes</button>
+</div>
+endsnippet
+snippet b "tiny"
+<button className="ui tiny button right labeled icon" onClick={ @${1} }>
+	${2}
+	<i className="add squared icon" />
+</button>$0
+endsnippet
+snippet b "add/plus"
+<button className="ui mini left labeled icon button" onClick={ @$1 }>
+	<i className="plus icon"></i>
+	$0
+</button>
+endsnippet
+snippet d "simple"
+<div className="${1:classes}">
+	$0
+</div>
+endsnippet
+snippet d "item"
+<div className="item">$0</div>
+endsnippet
+snippet d "display none"
+<div id="${1}" style={ { display: 'none' } }>
+	$0
+</div>
+endsnippet
+snippet d "subheader"
+<div className="sub header">$1</div>
+endsnippet
+snippet d "with key"
+<div key={ "#{ ${1:idx} }" } className="$2">
+	$0
+</div>
+endsnippet
+snippet p
+<p>${1}</p>
+endsnippet
+snippet h "html <h> tag"
+<h${1:4} className="${2:ui dividing header}">${3:content}</h$1>
+endsnippet
+snippet h "with subheader"
+<h$1 className="ui header">
+	$2
+	<div className="sub header">$3</div>
+</h$1>
+endsnippet
+snippet label
+<label htmlFor="${1}">${2}</label>
+endsnippet
+snippet dr "simple"
+<div className="ui divider"></div>
+$0
+endsnippet
+snippet dr "hidden"
+<div className="ui divider hidden"></div>
+$0
+endsnippet
+snippet dr "horizontal"
+<div className="ui horizontal divider">
+$1
+</div>
+$0
+endsnippet
+snippet it "spec"
+it '$1', ->
+	$0
+endsnippet
+
+snippet be "beforeEach"
+beforeEach ->
+	$0
+endsnippet
+
+snippet spy "simple spyOn call"
+spyOn( @$1, '$2' )
+
+@$1.${3:trigger}()
+
+expect( @$1.$2 ).toHaveBeenCalled()
+endsnippet
+
+snippet spy "AJAX - callback test"
+deferred = new jQuery.Deferred()
+spyOn( $, 'ajax' ).and.returnValue( deferred )
+
+@${1:trigger}()
+
+deferred.resolve( ${2:returnValue} )
+
+expect( $0 ).toHaveBeenCalled()
+endsnippet
+
+snippet tru "toBeTruthy" b
+expect( $1 ).toBeTruthy()
+endsnippet
+snippet fal "toBeTruthy" b
+expect( $1 ).toBeFalsy()
+endsnippet
+snippet desc
+describe '$1', ()->
+	$0
+endsnippet
+
+snippet exp
+expect( $1 ).toBe $0
+endsnippet
+snippet undef
+_.isUndefined( ${1:what} )
+endsnippet
+snippet emp
+_.isEmpty( ${1} )
+endsnippet
+snippet times
+_.times ${1:number}, ( i )->
+	$0
+endsnippet
+snippet lsm
+React.addons.LinkedStateMixin
+endsnippet
+snippet swm
+StoreWatchMixin( '${1}' )
+endsnippet
+snippet rsm
+Router.Navigation, Router.State
+endsnippet
+snippet m "moment"
+moment( ${1} )
+endsnippet
+snippet m "format"
+${1}.format( 'YYYY-MM-DD' )
+endsnippet
+snippet m "is after"
+${1:endDate}.isAfter( ${2:startDate} ) # true or false
+endsnippet
+snippet m "diff"
+moment( ${1:endDate} ).diff( ${2:startDate}, 'days' ) # seconds, minutes, hours, days, weeks, months, years
+endsnippet
+snippet cls
+class App.$1
+	constructor: ( @el )->
+
+	render: ->
+
+		# Process only if on the $1 Controller
+		return if $( @el ).length == 0
+
+		#----------------------------------------------
+		# $1 Page behaviors
+		#----------------------------------------------
+		$0
+
+
+
+setup = ->
+	home = new App.$1 '${2:.controller__something}'
+	home.render( )
+
+
+$( document ).ready( setup )
+$( document ).on 'page:change', ->
+	setup()
+endsnippet
+snippet dd
+$( '.ui.dropdown$1' ).dropdown(
+	debug: true
+	onChange: ( v, t, ch )->
+		console.log "$2 Changed", v
+)
+endsnippet
+snippet ref "node"
+$( React.findDOMNode( @refs.${1:node} ) )$0
+endsnippet
+snippet ref "value"
+$( React.findDOMNode( @refs.${1:node} ) ).value.trim()
+endsnippet
+snippet pr "React - single property"
+$1={ @${2:props}.$1 } $0
+endsnippet
+snippet pr "React - all props - spread"
+{... @props}
+endsnippet
+snippet pr "Object property"
+$1: $0
+endsnippet
+snippet pt "PropTypes config"
+propTypes:
+	$1: React.PropTypes.$2$0
+endsnippet
+snippet ptr "PropTypes required"
+$1: React.PropTypes.$2.isRequired
+endsnippet
+snippet st "simple"
+@state.${1}$0
+endsnippet
+snippet st "set"
+@setState
+	$0
+endsnippet
+snippet st "concat"
+@setState
+	${1}: @state.$1.concat( [ ${2} ] )
+endsnippet
+snippet concat
+@setState
+	${1}: @state.$1.concat( [ ${2} ] )
+endsnippet
+snippet st "remove"
+@setState
+	${1}: React.addons.update( @state.$1, { $splice: [ [ idx, 1 ] ] } )
+endsnippet
+snippet cdm
+componentDidMount: ->
+	$0
+endsnippet
+snippet cdu
+componentDidUpdate: ->
+	$0
+endsnippet
+snippet crp
+componentWillReceiveProps: ( npr ) ->
+	$0
+endsnippet
+snippet cwr
+componentWillReceiveProps: ( npr ) ->
+	$0
+endsnippet
+snippet v
+value={ @state.${1} }
+endsnippet
+snippet vl
+valueLink={ @linkState( '$1' ) }$0
+endsnippet
+snippet dl
+valueLink={ @deepLinkState( [ '$1', '$2' ] ) }$0
+endsnippet
+snippet cn
+className=$1
+endsnippet
+snippet cx "classes ="
+$1 = cx( '' )
+endsnippet
+snippet bind "click binding"
+onClick={ @${1:onSelect}.bind( this, $0 ) }
+endsnippet
+
+snippet sst
+@setState
+	$1: $2
+endsnippet
+snippet red "simple object template"
+{ $0 } = require '../actions'
+
+$1 = {}
+
+$1Reducer = ( state=$1, action ) ->
+	state
+
+module.exports = $1Reducer
+endsnippet
+snippet assign
+Object.assign( {}, state, { $1: action.payload.data.$1 } )
+endsnippet
+snippet rx "setup"
+{ bindActionCreators } = require 'redux'
+{ connect }            = require 'react-redux'
+actions                = require './actions'
+endsnippet
+
+snippet rx "connect"
+mapStateToProps = ( state ) ->
+	$1: state.$1
+
+mapDispatchToProps = ( dispatch ) ->
+	bindActionCreators( {  }, dispatch )
+
+
+module.exports = connect(
+	mapStateToProps
+	actions
+)( $0 )
+endsnippet
+
+snippet red "array template"
+{ $1 } = require '../actions'
+
+INITIAL_STATE = []
+
+removeInvite = ( state, id ) ->
+	stateClone = state
+
+	lidx = _.findIndex( stateClone, { id: id } )
+	stateClone.splice( lidx, 1 ) if lidx > -1
+
+	[].concat( stateClone )
+
+$2Reducer = ( state = INITIAL_STATE, action ) ->
+	switch action.type
+		when "#{ Constants.$1 }_FULFILLED"
+			state.concat( action.payload.data )
+		#when "#{ Constants.CANCEL_INVITE }_FULFILLED"
+			#removeInvite( state, action.payload.data.id )
+		else
+			state
+
+module.exports = $2Reducer
+endsnippet
+
+snippet red "switcher"
+$1 = {}
+
+$1Reducer = ( state = $1, action ) ->
+	switch action.type
+		when "#{ Constants.$2 }_FULFILLED"
+			Object.assign( {}, state, action.payload.data )
+		when "#{ Constants.$2 }_PENDING"
+			Object.assign( {}, state, action.payload.data )
+		when "#{ Constants.$2 }_REJECTED"
+			Object.assign( {}, state, action.payload.data )
+		else
+			state
+endsnippet
+
+snippet action "action creator - simple"
+$1: ( data ) ->
+
+	{
+		type: Constants.$2
+		payload: data
+	}
+endsnippet
+
+snippet action "action creator - ajax"
+$1: ( data ) ->
+	request = axios.${3:post} "#{ API }/$0", { data: data }
+
+	{
+		type: $2
+		payload: request
+	}
+endsnippet
+
+snippet action "CRUD set"
+Constants = require './constants'
+axios     = require 'axios'
+
+API = "/api/v1"
+
+
+module.exports =
+	get${1:Model}s: ->
+		request = axios.get "#{ API }/${2:path}s"
+
+		{
+			type: Constants.GET_${3:MODEL}S
+			payload: request
+		}
+
+	add$1: (data) ->
+		request = axios.post "#{ API }/$2s", { data: data }
+
+		{
+			type: Constants.ADD_$3
+			payload: request
+		}
+
+	update$1: ( data ) ->
+		request = axios.put "#{ API }/$2s", { data: data }
+
+		{
+			type: Constants.UPDATE_$3
+			payload: request
+		}
+
+	delete$1: ( data ) ->
+		request = axios.delete "#{ API }/$2s", { data: data }
+
+		{
+			type: Constants.DELETE_$3
+			payload: request
+		}
+endsnippet
+
+snippet action "CRUD Constants"
+module.exports =
+	ADD_${1:MODEL}:    'ADD_$1'
+	UPDATE_$1: 'UPDATE_$1'
+	DELETE_$1: 'DELETE_$1'
+	GET_$1S:   'GET_$1S'
+endsnippet
+
+snippet const "CRUD constants"
+ADD_${1:MODEL}:    'ADD_$1'
+UPDATE_$1: 'UPDATE_$1'
+DELETE_$1: 'DELETE_$1'
+GET_$1S:   'GET_$1S'
+endsnippet
+
+snippet red "reducers index"
+$1 = require './$1'
+user = require './user'
+
+module.exports =
+	user: user
+	$1: $1
+endsnippet
+
+snippet switch "full switcher"
+switch action.type
+	when "#{ Constants.$1 }_FULFILLED"
+		Object.assign( {}, state, ${2:action.payload.data.something} )
+	else
+		state
+endsnippet
+
+snippet switch "single type switcher - simple"
+when Constants.$1
+	Object.assign( {}, state, $2 )
+$0
+endsnippet
+
+snippet switch "single type switcher - ajax"
+when "#{ Constants.$1 }_FULFILLED"
+	Object.assign( {}, state, $2 )
+$0
+endsnippet
+
+snippet rt "RouteHandler"
+{
+	React.cloneElement( @props.children, @props )
+}
+endsnippet
+
+snippet rt "get router context"
+contextTypes:
+	router: React.PropTypes.object.isRequired
+endsnippet
+
+snippet rt "push"
+@context.router.push( { pathname: $0 } )
+endsnippet
+
+snippet rh "single"
+{ @props.children }
+endsnippet
+
+snippet rh "template"
+cx        = require( 'classnames' )
+Link      = Router.Link
+
+$1 = React.createClass
+
+	displayName: "$1"
+
+	getInitialState: ->
+		name: "$1"
+
+	componentDidMount: ->
+		console.log "$1 Props", @props
+
+	render: ->
+
+		classes = cx( "", @props.classes )
+
+		<div className={ classes }>
+			{ @props.children }
+		</div>
+
+module.exports = $1
+endsnippet
+
+snippet ro
+<Route path="${1}" component={ $2 } />
+$0
+endsnippet
+
+snippet rt "regular route"
+<Route path="${1}" component={ $2 } />
+$0
+endsnippet
+
+snippet rt "nested route"
+<Route path="${1}" component={ $2 } >
+	$0
+</Route>
+endsnippet
+
+snippet rt "IndexRoute"
+<IndexRoute component={ ${1} } />
+endsnippet
+
+snippet li "html"
+<li $1>$2</li>
+endsnippet
+
+snippet l "regular Link"
+<Link to="${1}" $0>${2}</Link>
+endsnippet
+
+snippet l "Link button"
+<Link to="${1}" className="ui tiny right labeled icon button">
+	${2}
+	<i className="right arrow icon" />
+</Link>
+endsnippet
+
+snippet l  "cancel link"
+<Link to="${1}" className="ui tiny basic button">
+	Cancel
+</Link>
+endsnippet
+
+snippet l "map an array into Links"
+{
+	routes.map ( rt, idx )=>
+		classes = Utils.classNames( 'item' )
+		<Link key={ "rt-#{ idx }" } to={ rt.route } className={ classes }>{ rt.name }</Link>
+}
+endsnippet
+
+snippet l "with onClick"
+<Link to="$1" params={ $2 } onClick={ @$3.bind( this, $4 ) }>$5</Link>
+endsnippet
+
+snippet rt "debug"
+# Needs mixins: [ Router.State ]
+console.log "Router Path", @getPath()
+console.log "Router Pathname", @getPathname()
+console.log "Active Routes", @getRoutes()
+console.log "Router Params", @getParams()
+endsnippet
+
+snippet rt "base template"
+{ Route, IndexRoute } = require 'react-router'
+
+App       = require( './components/app' )
+Dashboard = require( './components/dashboard' )
+
+
+routes = (
+	<Route path="/" component={ App }>
+		<IndexRoute component={ Dashboard }/>
+	</Route>
+)
+
+module.exports = routes
+endsnippet
+
+snippet seg "single"
+<div className="ui segment">
+	${1:body}
+</div>
+endsnippet
+snippet seg "top left label"
+<div className="ui segment">
+	<div className="ui olive top left attached label">
+		$1
+	</div>
+	$0
+</div>
+endsnippet
+snippet seg "horizontal segments"
+<div className="ui horizontal segments">
+	<div className="ui segment">
+		<p>Left Segment</p>
+	</div>
+	<div className="ui segment">
+		<p>Right Segment</p>
+	</div>
+</div>
+endsnippet
+snippet seg "vertical segments"
+<div className="ui vertical segments">
+	<div className="ui segment">
+		<p>Top Segment</p>
+	</div>
+	<div className="ui segment">
+		<p>Bottom Segment</p>
+	</div>
+</div>
+endsnippet
+snippet seg "attached with header"
+<div className="ui top attached header">
+	<h4>$1</h4>
+</div>
+<div className="ui attached segment">
+	$0
+</div>
+endsnippet
+snippet seg "bottom attached"
+<div className="ui bottom attached segment">
+	$0
+</div>
+endsnippet
+snippet grid
+<div className="ui grid">
+	<div className="${1:three} wide column">Left</div>
+	<div className="${2:thirteen} wide column">Main</div>
+</div>
+endsnippet
+snippet row
+<div className="row">
+$0
+</div>
+endsnippet
+snippet col
+<div className="$1 wide column">$2</div>
+endsnippet
+snippet dd "html"
+<div className="ui selection dropdown">
+	<input type="hidden" name="$1" />
+	<i className="dropdown icon"></i>
+	<div className="default text">$2</div>
+	<div className="menu">
+		<div className="item" data-value="${3:value}">${3/\w+\s*/\u$0/g}</div>
+		<div className="item" data-value="${4:value}">${4/\w+\s*/\u$0/g}</div>
+		$0
+	</div>
+</div>
+endsnippet
+snippet dd "map"
+<div className="ui selection dropdown">
+	<input type="hidden" name="$1" />
+	<i className="dropdown icon"></i>
+	<div className="default text">$2</div>
+	<div className="menu">
+		{
+			for item, idx in []
+				<div className="item" data-value="${3:value}">$4</div>
+		}
+		$0
+	</div>
+</div>
+endsnippet
+snippet dd "item"
+<div className="item" data-value="${1:value}">${1/\w+\s*/\u$0/g}</div>
+endsnippet
+snippet dd "js"
+$( '.ui.dropdown' ).dropdown()
+endsnippet
+snippet acc "html"
+<div ref="acc" className="ui styled fluid accordion">
+	<div className="active title">
+		<i className="dropdown icon" />
+		${1:title}
+	</div>
+	<div className="active content">
+		<p>${1/\w+\s*/\u$0/g}</p>
+	</div>
+</div>
+endsnippet
+snippet acc "map"
+<div ref="acc" className="ui styled fluid accordion">
+	{
+		for sec, idx in []
+
+			tClass = cx( 'title', 'active': idx == 0 )
+			cClass = cx( 'content', 'active': idx == 0 )
+
+			<div key="acc-#{ idx }">
+				<div className={ tClass }>
+					<i className="dropdown icon" />
+					Section { idx } Title
+				</div>
+				<div className={ cClass }>
+					<p>Section { idx } Content</p>
+				</div>
+			</div>
+	}
+</div>
+endsnippet
+snippet acc "js"
+$( @refs.${1:acc} ).accordion(
+	debug: true
+)
+endsnippet
+snippet acc "item"
+<div className="title">
+	<i className="dropdown icon" />
+	${1}
+</div>
+<div className="content">
+	<p>${1/\w+\s*/\u$0/g}</p>
+</div>
+endsnippet
+snippet tab "dynamic menu"
+<div className="ui pointing secondary menu">
+	{
+		for section, idx in sections
+			tClass = cx( 'item', 'active': idx == 0 )
+			<a key="section-#{ idx }" className={ tClass } data-tab={ section.key }>{ section.desc }</a>
+	}
+</div>
+endsnippet
+snippet tab "menu"
+<div className="ui pointing secondary menu">
+	<a className="active item" data-tab="${1}">${1/\w+\s*/\u$0/g}</a>
+	$0
+</div>
+endsnippet
+snippet tab "item"
+<a className="item" data-tab="${1}">${1/\w+\s*/\u$0/g}</a>
+endsnippet
+snippet tab "content"
+<div className="ui tab" data-tab="${1:section}">
+	<p>${1/\w+\s*/\u$0/g}</p>
+</div>
+endsnippet
+snippet tab "js"
+$( '${1:.secondary.menu .item}' ).tab($0)
+endsnippet
+snippet list "bulleted"
+<div className="ui bulleted list">
+	{
+		${1}.map ( ${2}, idx )->
+			<div key={ "$2-#{ idx }" } className="item">{ $0 }</div>
+	}
+</div>
+endsnippet
+snippet list "item"
+<div className="item">${1}</div>
+endsnippet
+snippet list "sub menu"
+<div className="list">
+	$0
+</div>
+endsnippet
+snippet tab "sub menu"
+<div id="context-menu" className="ui top attached tabular menu">
+	<a className="active item" data-tab="${1}">${1/\w+\s*/\u$0/g}</a>
+	<a className="item" data-tab="${2}">${2/\w+\s*/\u$0/g}</a>
+</div>
+<div className="ui bottom attached active tab segment" data-tab="$1">
+	<p>${1/\w+\s*/\u$0/g}</p>
+</div>
+<div className="ui bottom attached tab segment" data-tab="$2">
+	<p>${2/\w+\s*/\u$0/g}</p>
+</div>
+endsnippet
+snippet crumbs "small"
+<div className="ui small breadcrumb">
+	<a className="section">Home</a>
+	<i className="right chevron icon divider"></i>
+	<a className="section">Registration</a>
+	<i className="right chevron icon divider"></i>
+	<div className="active section">Personal Information</div>
+</div>
+endsnippet
+snippet search "html"
+<div className="required field">
+	<label>Course</label>
+	<div className="ui fluid category search">
+		<div className="ui fluid input">
+			<input className="prompt" type="text" placeholder="Select Course" id="course_search" name="query" autoComplete="off" />
+		</div>
+	</div>
+</div>
+endsnippet
+snippet search "js"
+$( '.ui.search' ).search(
+	apiSettings:
+		action: 'search courses'
+	type: 'category'
+	minCharacters: 2
+	debug: true
+	verbose: true
+	error:
+		noResults: 'Please retry with different key word'
+)
+endsnippet
+snippet menu "top attached"
+<div className="ui top attached menu">
+	<div className="ui icon item">
+		<i className="wrench icon"/>
+	</div>
+</div>
+endsnippet
+snippet col "columns"
+<div className="columns">
+	<div className="$1 wide column">
+		<p>$1 wide column</p>
+	</div>
+	<div className="$2 wide column">
+		<p>$2 wide column</p>
+	</div>
+</div>
+endsnippet
+snippet lbl "top left"
+<div className="ui ${1:blue} top left attached label">$0</div>
+endsnippet
+snippet lbl "ribbon"
+<div className="ui ${1:orange} ribbon label">$0</div>
+endsnippet
+snippet lbl "tag"
+<div className="ui ${1:orange} tag label">$0</div>
+endsnippet
+snippet lbl "simple"
+<div className="ui ${1:yellow} mini label">$0</div>
+endsnippet
+snippet modal
+<div id="$1" className="ui modal">
+	<div className="ui segment">
+		<h4 className="ui dividing header">$2</h4>
+		<div className="content">
+			<p>Are you sure?</p>
+		</div>
+		<div className="ui divider"></div>
+		<div className="actions">
+			<div className="ui button">Cancel</div>
+			<div className="ui button">OK</div>
+		</div>
+	</div>
+</div>
+endsnippet
+snippet stats
+<div className="ui four statistics">
+	<div className="red statistic">
+		<div className="value">
+			$1
+		</div>
+		<div className="label">
+			<Link to="$2">$3</Link>
+		</div>
+	</div>
+</div>
+endsnippet
+snippet stats "placeholder"
+<div className="ui eight statistics">
+	<div className="red statistic">
+		<div className="value">
+			365
+		</div>
+		<div className="label">
+			<Link to="courses">days</Link>
+		</div>
+	</div>
+	<div className="orange statistic">
+		<div className="value">
+			52
+		</div>
+		<div className="label">
+			<Link to="courses">weeks</Link>
+		</div>
+	</div>
+	<div className="olive statistic">
+		<div className="value">
+			12
+		</div>
+		<div className="label">
+			<Link to="courses">months</Link>
+		</div>
+	</div>
+</div>
+endsnippet
+snippet stat
+<div className="red statistic">
+	<div className="value">
+		$1
+	</div>
+	<div className="label">
+		<Link to="$2">$3</Link>
+	</div>
+</div>
+endsnippet
+snippet card "multiple"
+<div className="ui cards">
+	$0
+</div>
+endsnippet
+snippet card "single"
+<div className="card">
+	$0
+</div>
+endsnippet
+snippet dd "Component"
+<Dropdown id="$1" label="$2" options={ $3 } required={ true } ${4:selected|textMethod|valueMethod}$0 />
+endsnippet
+snippet th
+<th>${1}</th>
+endsnippet
+snippet tr "simple"
+<tr key={ idx }>
+	<td>{ ${1:content} }</td>
+	${2}
+</tr>
+endsnippet
+snippet tr "map with delete link"
+$1 = $2.map ( $3, idx )=>
+	<tr key={ idx }>
+		<td>{ idx + 1 }</td>
+		<td>{ $3.name }</td>
+		<td>
+			<a href="javascript:void(0)" onClick={ @remove.bind( this, idx ) }>
+				<i className="icon large red remove circle"/>
+			</a>
+		</td>
+	</tr>
+endsnippet
+snippet tr "map"
+$1 = $2.map ( $3, idx )=>
+	<tr key={ idx }>
+		<td>{ idx + 1 }</td>
+		<td>{ $3.name }</td>
+	</tr>
+endsnippet
+snippet td
+<td>{ ${1:content} }</td>
+endsnippet
+snippet table
+<table className="ui very basic table">
+	<thead>
+		<tr>
+			<th>No.</th>
+			<th>Type</th>
+			<th>Title</th>
+			<th>Posted On</th>
+		</tr>
+	</thead>
+	<tbody>
+		{
+			tRows
+		}
+	</tbody>
+</table>
+endsnippet
+snippet tpage
+<tfoot>
+	<tr>
+		<th colSpan="5">
+			<div className="ui left floated pagination menu">
+				<a className="icon item"><i className="left chevron icon" /></a>
+				<a className="item">1</a>
+				<a className="item">2</a>
+				<a className="icon item"><i className="right chevron icon" /></a>
+			</div>
+		</th>
+	</tr>
+</tfoot>
+endsnippet
+snippet comp "stateless"
+$1 = ( props ) ->
+	<div>
+		$1 Page
+	</div>
+
+module.exports = $1
+endsnippet
+
+snippet comp "React.createClass"
+cx = require( 'classnames' )
+
+
+${1:Name} = React.createClass
+	displayName: "$1"
+
+	getInitialState: ->
+		name: "$1"
+
+	componentWillMount: ->
+		#@props.doSomething()
+
+	componentDidMount: ->
+		# $( '.ui.dropdown' ).dropdown()
+
+	render: ->
+		classes = cx( "", @props.classes )
+
+		<div className={ classes }>
+			<p>Hello from $1</p>
+		</div>
+
+module.exports = $1
+endsnippet
+snippet comp "simple route handler"
+$1 = ( props ) ->
+	<div>
+		{
+			props.children
+		}
+	</div>
+
+module.exports = $1
+endsnippet
+
+snippet comp "container"
+# { bindActionCreators } = require 'redux'
+{ connect }            = require 'react-redux'
+
+#{  } = require '../actions'
+cx = require( 'classnames' )
+
+
+${1:Name} = React.createClass
+	displayName: "$1"
+
+	getInitialState: ->
+		name: "$1"
+
+	componentDidMount: ->
+		# $( '.ui.dropdown' ).dropdown()
+
+	render: ->
+		classes = cx( "", @props.classes )
+
+		<div className={ classes }>
+			<p>Hello from $1</p>
+		</div>
+
+
+# mapStateToProps = ( state ) ->
+#	$2: state.$2
+
+#mapDispatchToProps = ( dispatch ) ->
+	#bindActionCreators( { }, dispatch )
+
+
+# module.exports = connect(
+	# mapStateToProps
+	#mapDispatchToProps
+# )( $1 )
+
+module.exports = $1
+endsnippet
+
+snippet comp "route handler"
+{ connect }            = require 'react-redux'
+
+#{  } = require '../actions'
+cx = require( 'classnames' )
+
+
+${1:Name} = React.createClass
+	displayName: "$1"
+
+	getInitialState: ->
+		name: "$1"
+
+	componentDidMount: ->
+		# $( '.ui.dropdown' ).dropdown()
+
+	render: ->
+		classes = cx( "", @props.classes )
+
+		<div className={ classes }>
+			{
+				React.cloneElement( @props.children, @props )
+			}
+		</div>
+
+
+mapStateToProps = ( state ) ->
+	$2: state.$2
+
+module.exports = connect(
+	mapStateToProps
+	#mapDispatchToProps
+)( $1 )
+endsnippet
+
+snippet comp "Entry Point"
+require '../../common/Deps'
+
+ReactDOM                                          = require 'react-dom'
+{ Provider }                                      = require 'react-redux'
+{ createStore, applyMiddleware, combineReducers } = require 'redux'
+{ Router, hashHistory }                           = require 'react-router'
+thunkMiddleware                                   = require( 'redux-thunk' ).default
+promiseMiddleware                                 = require( 'redux-promise-middleware' ).default
+createLogger                                      = require 'redux-logger'
+
+
+reducers = require './reducers/index'
+routes   = require './routes'
+
+
+mount = '$1'
+el    = document.getElementById( mount )
+
+
+if !_.isUndefined( el )
+
+	initialState =
+		user:  gon.user
+		$1:    gon.grant
+
+
+	reducer = combineReducers( reducers )
+	logger  = createLogger()
+
+	devTools = if window.devToolsExtension then window.devToolsExtension() else DevTools.instrument()
+
+	createStoreWithMiddleware = applyMiddleware(
+		thunkMiddleware,
+		promiseMiddleware(),
+		#devTools,
+		logger
+	)( createStore )
+
+
+	ReactDOM.render(
+		<Provider store={ createStoreWithMiddleware( reducer, initialState ) }>
+			<Router history={ hashHistory } routes={ routes } />
+		</Provider>, document.getElementById( mount )
+	)
+endsnippet
+
+snippet types
+$1_$2_START: '$1_$2_START'
+$1_$2_SUCCESS: '$1_$2_SUCCESS'
+$1_$2_ERROR: '$1_$2_ERROR'
+endsnippet
+snippet table "flux based accept / reject"
+cx          = require( 'classnames' )
+FluxMixin   = Fluxxor.FluxMixin( React )
+Link        = Router.Link
+ActionTypes = require( './ActionTypes' )
+Dialog      = require( '../../common/components/Dialog')
+
+
+
+$1sTable = React.createClass
+
+	displayName: "$1sTable"
+
+	mixins: [
+		FluxMixin
+		Router.State
+	]
+
+	getInitialState: ->
+		name: "$1sTable"
+
+	processAccept: ( idx )->
+		dialog = ActionTypes.dialog.ACCEPT_$2
+		@getFlux().actions.showDialog( { type: dialog, index: idx } )
+
+	processReject: ( idx )->
+		dialog = ActionTypes.dialog.REJECT_$2
+		@getFlux().actions.showDialog( { type: dialog, index: idx } )
+
+	tableView: ->
+		<table className="ui very basic table">
+			<thead>
+				<tr>
+					<th>No.</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{
+					for row, idx in @props.$3
+						req = row.requester
+						<tr key={ idx }>
+							<td>{ idx + 1 }</td>
+							<td>
+								<button className="ui mini olive left labeled icon button accept" onClick={ @processAccept.bind( this, idx ) }>
+									<i className="check icon"></i>
+									Accept
+								</button>
+								<button className="ui mini left labeled icon button reject" onClick={ @processReject.bind( this, idx ) }>
+									<i className="red remove icon"></i>
+									Reject
+								</button>
+							</td>
+						</tr>
+				}
+			</tbody>
+		</table>
+
+
+	emptyView: ->
+		<p>No pending $3</p>
+
+	confirmAction: ->
+		dialog = @props.dialog
+		obj    = dialog.obj
+
+		switch dialog.type
+			when ActionTypes.dialog.ACCEPT_$2
+				@getFlux().actions.staff.accept$1( { id: obj.id } )
+			when ActionTypes.dialog.REJECT_$2
+				@getFlux().actions.staff.reject$1( { id: obj.id } )
+
+	dialogView: ->
+		<Dialog {... @props} confirm={ @confirmAction } />
+
+	buildTable: ->
+		if @props.$3.length > 0 then @tableView() else @emptyView()
+
+	dialogEvents: ->
+		[ ActionTypes.dialog.ACCEPT_$2, ActionTypes.dialog.REJECT_$2 ]
+
+	showDialog: ->
+		!_.isEmpty( @props.dialog ) and ( @props.dialog.type in @dialogEvents() )
+
+	currentView: ->
+		if @showDialog() then @dialogView() else @buildTable()
+
+	render: ->
+		classes = cx( "", @props.classes )
+
+		<div className={ classes }>
+			<div className="ui ribbon label">$1s</div>
+			<div className="ui divider hidden"></div>
+			{
+				@currentView()
+			}
+			<div className="ui divider hidden"></div>
+		</div>
+
+
+module.exports = $1sTable
+
+
+endsnippet
+snippet step
+<div className="${1:disabled active completed} step">
+	<div className="content">
+		<div className="title">${2}</div>
+		<div className="description">${3}</div>
+	</div>
+</div>
+endsnippet
+snippet i
+<i className="${1:dropdown} icon" />
+endsnippet
+snippet astep
+<div className="title">
+	<i className="dropdown icon" />
+	${1:matter}
+</div>
+<div className="content">
+	<p>$1</p>
+</div>
+endsnippet
+
+snippet yt
+cheerio = require 'cheerio'
+
+$1 =
+	builder: ( job ) ->
+
+	main: ( task, http, params ) ->
+		http.get base_uri, ( err, res, body ) ->
+
+			return task.fail( err, 'Request returned an error' ) if err
+
+			$ = cheerio.load body
+
+
+			# process data
+
+			# task.share( 'something', something )
+			# task.success( something )
+
+
+	hooks:
+		onSuccess: ( task ) ->
+			console.log JSON.stringify( task.data, null, 2 )
+
+exports.$1 = $1
+endsnippet
+snippet hg
+http.get $1, ( err, resp, body ) ->
+	$0
+endsnippet
+snippet $
+$( this ).$0
+endsnippet
+snippet $t
+$( ${1:this} ).text()
+endsnippet
+snippet $a
+$( ${1:this} ).attr( '$2' )$0
+endsnippet
+snippet $h
+$( ${1:this} ).attr( 'href' )$0
+endsnippet

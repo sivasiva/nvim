@@ -1,0 +1,1916 @@
+# extends html
+
+# Using Python modules in UltiSnips
+# https://github.com/Morantron/my-snippets/blob/master/UltiSnips/javascript.snippets
+# https://brigade.engineering/sharpen-your-vim-with-snippets-767b693886db
+
+global !p
+import inflection
+endglobal
+
+snippet imp "import moduleName from 'module'"
+import $1 from '$2'
+endsnippet
+
+snippet imd "import { destructuredModule } from 'module'"
+import { $1 } from '$2'
+endsnippet
+
+snippet im* "import * as alias from 'module'"
+import * as $1 from '$2'
+endsnippet
+
+snippet ima "import { originalName as aliasName} from 'module'"
+import { $1 as $2 } from '$3'
+endsnippet
+
+snippet exp "export default moduleName"
+export default $1
+endsnippet
+
+snippet exd "export { destructuredModule } from 'module'"
+export { $1 } from '$2'
+endsnippet
+
+snippet ef "export const functionName = (params) => { }"
+export const $1 = ($2) => { $0 }
+endsnippet
+
+snippet edf "export default (params) => { }"
+export default () => { $1 }
+$0
+endsnippet
+
+
+## Base ---
+snippet e "export const"
+export const $1 = '$1';
+endsnippet
+
+snippet cl "console.log"
+console.log("== $1", { $2 });
+$0
+endsnippet
+
+
+snippet for "for loop"
+for(i=0 ; i < $1; i++){
+				$0
+}
+endsnippet
+
+snippet f "function"
+const $1 = ({}) => {
+	// return (<h1>$1</h1>)
+}
+
+export default $1
+endsnippet
+
+snippet comm "comment block"
+//
+// $1
+//
+$0
+endsnippet
+
+snippet ref "REF comment"
+//
+// Ref: $1
+//
+$0
+endsnippet
+
+snippet todo "TODO comment"
+//
+// TODO: $1
+//
+$0
+endsnippet
+
+## ES6 export
+snippet e "export"
+export $0;
+endsnippet
+
+snippet e "const"
+export const $1 = $0;
+endsnippet
+
+snippet e "default"
+export default $0;
+endsnippet
+
+snippet e "default function"
+export default function $0;
+endsnippet
+
+
+snippet i "import by destructuring {x}"
+import $1 from $2;
+$0
+endsnippet
+
+## JSX ---
+snippet d "div tag"
+<div className="$1">
+	$0
+</div>
+endsnippet
+
+snippet map
+$1.map( ( ${2:r}, i ) => {
+	return(
+		$0
+	);
+});
+endsnippet
+
+snippet jcom "JSX comment"
+{/*
+	$0
+*/}
+endsnippet
+
+snippet lcm "react lifecycle methods"
+getInitialState(){
+	return {}
+}
+
+getDefaultProps(){
+	return {}
+}
+
+// componentWillMount(){}
+// componentDidMount(){}
+// componentWillUnmount(){}
+
+// shouldComponentUpdate(nextProps, nextState){ return true }
+// componentWillUpdate(nextProps, nextState){}
+// componentDidUpdate(){}
+
+endsnippet
+
+
+
+# snippet i "React + PropTypes"
+# import React, {PropTypes} from 'react';
+# endsnippet
+
+# snippet i "import * as "
+# import * as $1 from '$0';
+# endsnippet
+
+snippet a "JSX onClick"
+<a href="javascript:;" onClick={() => this.$1($2)}>$3</a>
+endsnippet
+
+snippet e "export const function"
+export const $1 = () => {
+	$2
+}
+endsnippet
+
+snippet cf "const function"
+const $1 = () => {
+	$0
+}
+endsnippet
+
+## ES6 Utils ---
+snippet map "es6 map"
+$1.map(x => x.${2:name});
+endsnippet
+
+snippet reduce "es6 reduce"
+$1.reduce((total, n) => total + n);
+endsnippet
+
+snippet filter "es6 filter"
+$1.filter(n => n.id === parseInt(x.id));
+endsnippet
+
+snippet find "es6 find"
+$1.filter(n => n.id === parseInt(x.id));
+endsnippet
+
+snippet chunk "es6 chunk"
+// https://stackoverflow.com/a/11318797
+let chunks = [], size = ${1:3};
+
+while (${2:collection}.length > 0){
+	chunks.push($2.splice(0, size));
+}
+endsnippet
+
+snippet nl "disable next line"
+// eslint-disable-next-line
+endsnippet
+
+snippet nl "block"
+/* eslint-disable */
+
+
+/* eslint-enable */
+endsnippet
+
+## Formik Forms ---
+snippet form "Formik Form Config"
+import React from 'react'
+import yup from 'yup'
+import { FormWrapper, FormGenerator } from '../../core'
+
+export const EMPTY = {
+	name: '',
+	contact_name: '',
+	contact_phone: '',
+	address: {
+		street1: '',
+		street2: '',
+		city: '',
+		state_id: '',
+		full_address: '',
+		zip: ''
+	}
+}
+
+export const mapToServerFormat = values => {
+	return values
+}
+
+export const LAYOUT = [
+	[
+		{
+			name: 'name',
+			required: true,
+			label: '$1 Name',
+			mapping: 'name'
+		}
+	]
+]
+
+export const YUP_SCHEMA = yup.object().shape({
+	name: yup
+		.string()
+		.required()
+		.min(3, 'Name is too short'),
+	contact_name: yup.string(),
+	address: yup.object().shape({
+		street1: yup
+			.string()
+			.required()
+			.min(5, 'Address is too short'),
+		state_id: yup.number().required(),
+		city: yup
+			.string()
+			.required()
+			.min(2, 'City is too short'),
+		zip: yup
+			.string()
+			.required()
+			.min(5, 'Postal Code is too short')
+	})
+})
+
+// 1. Configure Form
+const FORM_CONFIG = {
+	mapPropsToValues: ({ current$1 }) => current$1 || EMPTY,
+	validationSchema: YUP_SCHEMA,
+	handleSubmit: (values, bag) => {
+		const { actions: { create$1, update$1 }, editing } = bag.props
+		const formValues = mapToServerFormat(values)
+
+		editing ? update$1(values.id, formValues) : create$1(formValues)
+	},
+	displayName: '$1Form' // helps with React DevTools
+	// debug: true,
+}
+
+// 2. Generate Form
+const FormUX = props => <FormGenerator {...props} formLayout={LAYOUT} debug />
+const Form = FormWrapper(FORM_CONFIG)(FormUX)
+
+// 3. Export Forms
+export const New$1 = props => <Form {...props} title={'New $1'} />
+
+export const Edit$1 = props => {
+	const { locations, match } = props
+	const { id } = match.params
+	const current$1 = locations.find(x => x.id === parseInt(id))
+	const title = 'Edit $1'
+
+	return (
+		<Form {...props} title={title} current$1={current$1} editing />
+	)
+}
+endsnippet
+
+snippet ff "Formik Field Config"
+{
+	name: '$1',
+	mapping: '$1',
+	label: '$2',
+	// type: 'select',
+	// required: true
+}
+endsnippet
+
+## Hapi ---
+snippet h "route"
+server.route({
+	method: '${1:GET}',
+	path: '${2:/}',
+	handler: function (request, reply) {
+		reply('Hello!');
+	}
+});
+endsnippet
+
+snippet h "define plugin"
+import routes from './routes';
+
+exports.register = (server, options, next) => {
+	server.route(routes);
+
+	next();
+};
+
+exports.register.attributes = {
+	name: '$1-routes',
+	version: '1.0.0',
+};
+endsnippet
+
+## Testing ---
+snippet it "`it` spec"
+it ( '$1', () => {
+	$0
+});
+endsnippet
+
+snippet jest "`expect` in test"
+expect( $1 ).to.$2;
+endsnippet
+
+snippet jest "specs - describe"
+describe ( '$1', () => {
+	$0
+});
+endsnippet
+
+snippet exp "specs - expect block"
+expect( $1 ).to.equal( $0 );
+endsnippet
+
+snippet tcl
+it( 'has the correct class', () => {
+	expect( component ).to.have.class( '$1' );
+});
+endsnippet
+
+snippet tel
+it( 'has a $1', () => {
+	expect( component.find( ${1:'textarea' } ) ).to.exist;
+});
+endsnippet
+
+snippet tex
+it( 'has a $1', () => {
+	expect( component.find( ${1:'textarea' } ) ).to.exist;
+});
+endsnippet
+
+snippet tval
+it( 'has the correct value', () => {
+	expect( component.find( ${1:'textarea' } ) ).to.have.value( '$2' );
+});
+endsnippet
+
+snippet tcount
+it( 'has ${1:count} ${2:li}', () => {
+	expect( component.find( '$2' ).length ).to.equal( $1 );
+});
+endsnippet
+
+snippet tcontain
+it( 'contains given text', () => {
+	expect( component ).to.contain( '$1' );
+});
+endsnippet
+
+snippet test
+import { renderComponent , expect } from '../test_helper';
+import $1 from '../../src/components/$1';
+
+describe('$1' , () => {
+	let component;
+
+	beforeEach(() => {
+		component = renderComponent($1);
+	});
+
+	it('renders component', () => {
+		expect(component).to.exist;
+	});
+});
+endsnippet
+
+snippet atest
+import { expect } from '../test_helper';
+
+describe('actions' , () => {
+	describe ( 'saveComment', () => {
+
+	});
+});
+endsnippet
+
+snippet bef
+beforeEach( () => {
+	$0
+});
+endsnippet
+
+snippet jest "snapshot test for Jest"
+import React from 'react'
+import {shallow} from 'enzyme'
+import toJson from 'enzyme-to-json'
+
+import $1 from '$2'
+
+test('<$1 /> renders correctly', () => {
+	const tree = shallow(<$1 />)
+
+	expect(toJson(tree)).toMatchSnapshot()
+});
+endsnippet
+
+snippet jest "enzyme - Container Component Spec"
+import React from 'react';
+import expect from 'expect';
+import {mount, shallow} from 'enzyme';
+import {$1} from './$1';
+
+describe("$2", () => {
+	it("$0", () => {
+		const props = {
+			// authors: [],
+			// course: { id: '', watchHref: '', title: '', authorId: '', length: '', category: '' },
+			actions: {
+				// saveCourse: () => { return Promise.resolve(); }
+			}
+		};
+
+		const wrapper = mount(<$1 {...props} />);
+
+		// const saveBtn = wrapper.find('input').last();
+		// expect(saveBtn.prop('type')).toBe('submit');
+
+		// saveBtn.simulate('click');
+		// expect(wrapper.state().errors.title).toBe('Title must be at least 5 characters');
+	});
+});
+endsnippet
+
+## Joi ---
+snippet joi "import setup"
+import Joi from 'joi-browser'
+
+const schema = Joi.object().keys({
+
+})
+endsnippet
+
+snippet joi "debug"
+console.group('------------ Joi Debug')
+console.log('form', this.state.model)
+console.log('errors', this.state.errors)
+console.groupEnd()
+endsnippet
+
+snippet joi "schema key"
+$1: Joi.string().min(2).required()
+endsnippet
+
+snippet joi "helper methods"
+errors(model = this.state.model) {
+	const result = Joi.validate(model, schema, { abortEarly: false });
+
+	let errorMap = {};
+
+	if (result.error !== null) {
+		errorMap = result.error.details.reduce((obj, item) => {
+			obj[item.path[0]] = item.message;
+			return obj;
+		}, {});
+	}
+
+	return errorMap;
+}
+
+onChange(e, d) {
+	const model = this.state.model;
+	model[d.id] = d.value;
+
+	const errors = this.errors(this.state.model);
+	this.setState({ model, errors });
+}
+
+onBlur(e, d) {
+	this.setState({
+		errors: this.errors(this.state.model),
+	});
+}
+
+hasError(key){
+	return Object.keys(this.state.errors).includes(key)
+}
+
+valid(){
+	return Object.keys(this.state.errors).length === 0
+}
+endsnippet
+
+## React Components ---
+snippet rfc "functional component"
+import React from 'react';
+
+const $1 = () =>{
+	return ( <div>$1</div> );
+}
+
+export default $1;
+endsnippet
+
+snippet imr "import React from 'react'"
+import React, { useState } from 'react'
+endsnippet
+
+snippet c "const"
+const $1 $0;
+endsnippet
+
+snippet c "const-ify a prop"
+const { $1 } = ${2:this.props};
+endsnippet
+
+snippet c "const-ify a prop action"
+const { $1 } = this.props.actions;
+endsnippet
+
+snippet ret "return ()"
+return (
+	$0
+);
+endsnippet
+snippet comp "basic"
+const $1 = () => {
+	return <h1>$1</h1>
+}
+
+export default $1
+endsnippet
+
+snippet comp "Provider"
+import { createContext, useContext, useEffect, useState } from "react";
+const $1Context = createContext({
+	user: null,
+});
+
+const ctx = {
+
+}
+
+export const $1Provider = (props) => {
+	return <$1Context.Provider value={ctx}>{children}</$1Context.Provider>;
+}
+
+export const use$1 = () => {
+	const context = useContext($1Context)
+
+	if (context === undefined) {
+		throw new Error("use$1 can only be used within the $1Provider tree");
+	}
+
+	return context;
+}
+
+export default $1Provider
+endsnippet
+
+snippet comp "component - Base"
+import React from 'react';
+import T from 'prop-types';
+
+class $1 extends React.Component {
+
+	constructor( props ){
+		super( props );
+
+		this.state = {
+			name: '$1'
+		};
+	}
+
+	render() {
+		return (
+			<div>
+				$1
+			</div>
+		);
+	}
+}
+
+$1.propTypes = {
+	name: T.string
+};
+
+$1.contextTypes = {};
+
+
+export default $1;
+endsnippet
+
+snippet comp "container"
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+//import { selectBook } from '../actions/index';
+
+class $1 extends Component {
+
+	constructor ( props ) {
+		super( props );
+
+		this.state = {
+			name: '$1'
+		};
+	}
+
+
+	render () {
+		return (
+			<div>
+				Hello from '$1'
+			</div>
+		);
+	}
+
+}
+export default $1;
+
+// function mapStateToProps( state ) {
+	// return {
+		// books: state.books
+	// };
+// }
+
+// function mapDispatchToProps( dispatch ) {
+	// return bindActionCreators( { selectBook: selectBook }, dispatch );
+// }
+
+// export default connect( mapStateToProps, mapDispatchToProps )( $1 );
+endsnippet
+
+
+snippet comp "Router Index Component"
+import React from 'react';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { Route, Switch, Redirect } from 'react-router-dom';
+
+import * as actions from './ducks';
+
+import T from 'prop-types';
+
+import Nav from './components/Nav';
+import Form from './components/Form';
+import List from './components/List';
+
+class $1 extends React.Component {
+constructor(props) {
+	super(props);
+}
+
+componentDidMount() {}
+
+render() {
+	const { authenticated } = this.props;
+
+	if (!authenticated) {
+		return <Redirect to="/u/signin" />;
+	}
+
+	return (
+		<div className="ui container">
+			<div className="ui red ribbon label">$1 Home</div>
+			<div className="ui hidden divider" />
+			<div className="ui container">
+				<div className="ui two column grid">
+					<div className="three wide column">
+						<Nav />
+					</div>
+					<div className="thirteen wide column">
+						<Switch>
+							<Route path="/projects/list" component={List} />
+							<Route
+								path="/projects/new"
+								component={() => <Form {...this.props} />}
+							/>
+							<Route path="/" component={List} />
+						</Switch>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+}
+
+$1.propTypes = {
+authenticated: T.bool.isRequired,
+};
+
+function mapStateToProps(state) {
+return {
+	// pass subset of state to component
+	authenticated: state.auth.authenticated,
+};
+}
+
+function mapDispatchToProps(dispatch) {
+return {
+	// pass actions the component needs
+	actions: bindActionCreators(actions, dispatch),
+};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)($1);
+endsnippet
+
+
+snippet map "render component"
+
+{
+	$1.$2.map((item, j) => (
+		<Menu.Item as={Link} to={link.url} key={`item-${j}`}>
+			{link.name}
+		</Menu.Item>
+	))
+}
+endsnippet
+
+
+snippet t "table - full table"
+<table className="table">
+	<thead>
+		<tr>
+			<th>No.</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+endsnippet
+
+snippet t "table - <tr>"
+<tr>$0</tr>
+endsnippet
+
+snippet t "table - <th>"
+<th>$0</th>
+endsnippet
+
+snippet t "table - <td>"
+<td>$0</td>
+endsnippet
+
+## Semantic UI ---
+snippet sui "import Semantic UI React comp"
+import { $1 }  from 'semantic-ui-react'
+endsnippet
+
+snippet dd "Dropdown"
+<Form.Field>
+	<label>$1</label>
+	<Dropdown
+		id="$2"
+		placeholder="$1"
+		selection
+		options={data.$2}
+		onChange={this.onChange}
+	/>
+</Form.Field>
+endsnippet
+
+snippet comp "SemUI Form"
+import React from "react";
+import T from "prop-types";
+import { Segment, Form, Dropdown, Button, Input, Label } from "semantic-ui-react";
+
+import data from "./data";
+
+// import DayPickerInput from "react-day-picker/DayPickerInput";
+// import "react-day-picker/lib/style.css";
+
+class $1 extends React.Component {
+constructor(props) {
+	super(props);
+
+	this.state = { form: {} };
+
+	this.onChange = this.onChange.bind(this);
+	this.onSave = this.onSave.bind(this);
+}
+
+onChange(e, data) {
+	const form = this.state.form;
+	form[data.id] = data.value;
+
+	return this.setState({ form });
+}
+
+onSave(e) {
+	e.preventDefault();
+}
+
+render() {
+	return (
+	<Segment>
+	<Label attached='top left'>$1</Label>
+		<Form>
+			<Form.Group widths="equal">
+				<Form.Field>
+					<label>First Name</label>
+					<Input
+						placeholder="First Name"
+						onChange={this.onChange}
+						id="firstName"
+					/>
+				</Form.Field>
+				<Form.Field>
+					<label>Last Name</label>
+					<Input
+						placeholder="Last Name"
+						id="lastName"
+						onChange={this.onChange}
+					/>
+				</Form.Field>
+			</Form.Group>
+			<Button content="Save Details" onClick={this.onSave} />
+		</Form>
+		</Segment>
+	);
+}
+}
+
+$1.propTypes = {
+	name: T.string,
+	user: T.object.isRequired,
+	actions: T.object.isRequired
+};
+
+$1.contextTypes = {};
+
+export default $1;
+endsnippet
+
+snippet fg "Form.Group"
+<Form.Group widths="equal">
+	<Form.Field width={8}>
+		<label>$1</label>
+		<Input placeholder="$1" onChange={this.onChange} id="$2" />
+	</Form.Field>
+	<Form.Field width={8}>
+		<label>$3</label>
+		<Input placeholder="$3" onChange={this.onChange} id="$4"  />
+	</Form.Field>
+</Form.Group>
+endsnippet
+
+snippet fld "Form.Field"
+<Form.Field width={8}>
+	<label>$1</label>
+	<Input placeholder="$1" onChange={this.onChange} id="$2" />
+</Form.Field>
+endsnippet
+
+snippet fld "Form.TextArea"
+<Form.Field>
+	<label>$1</label>
+	<Form.TextArea
+		placeholder="$1"
+		id="$2"
+		onChange={this.onChange}
+	/>
+</Form.Field>
+endsnippet
+
+snippet form "SemUI React Form"
+<Form>
+	<Form.Field fluid="true" required error={this.hasError('email')}>
+		<label>Email Address</label>
+		<Input
+			id="email"
+			placeholder="Email Address"
+			type="email"
+			onChange={this.onChange}
+		/>
+	</Form.Field>
+	<Form.Field
+		fluid="true"
+		required
+		error={this.hasError('password')}
+	>
+		<label>Password</label>
+		<Input
+			placeholder="Password"
+			type="password"
+			onChange={this.onChange}
+			id="password"
+		/>
+	</Form.Field>
+	<Button primary content="Sign in" onClick={this.signInUser} />
+</Form>
+endsnippet
+
+
+snippet acc "Accordion Panel"
+<Accordion.Title
+	active={activeIndex === ${1:0}}
+	index={2}
+	onClick={this.handleClick}
+>
+	<Icon name="dropdown" />
+	$2
+</Accordion.Title>
+<Accordion.Content active={activeIndex === $1}>
+	<Segment color="red">
+		<p>$2</p>
+	</Segment>
+</Accordion.Content>
+endsnippet
+
+snippet opt "option"
+{ text: '$1', value: '$1' }$0
+endsnippet
+
+snippet sem "Segment with label"
+<Segment>
+	<Label attached="top left">$1</Label>
+</Segment>
+endsnippet
+
+
+
+snippet comp "semantic-ui-react Tab List"
+import React from 'react';
+import T from 'prop-types';
+import { Tab } from 'semantic-ui-react';
+
+const $1 = () => {
+	/* eslint-disable */
+	const panes = [
+		{
+			menuItem: 'Tab 1',
+			render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane>,
+		},
+		{
+			menuItem: 'Tab 2',
+			render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane>,
+		},
+		{
+			menuItem: 'Tab 3',
+			render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane>,
+		},
+	];
+	/* eslint-enable */
+	return <Tab menu={{ secondary: true, pointing: true }} panes={panes} />;
+};
+
+$1.propTypes = {
+	name: T.string,
+};
+
+export default $1;
+endsnippet
+
+snippet comp "semantic-ui-react Vertical Menu"
+import React from 'react';
+import T from 'prop-types';
+import { Menu } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+
+import data from './data';
+
+const $1 = (props) => {
+	return (
+		<Menu vertical>
+			{props.sections.map((section, i) => (
+				<Menu.Item key={`section-${i}`}>
+					<Menu.Header>{section.name}</Menu.Header>
+					<Menu.Menu>
+						{section.link.map((link, j) => (
+							<Menu.Item as={Link} to={link.url} key={`link-${j}`}>
+								{link.name}
+							</Menu.Item>
+						))}
+					</Menu.Menu>
+					<Menu.Menu />
+				</Menu.Item>
+			))}
+		</Menu>
+	);
+};
+
+$1.propTypes = {
+	sections: T.array.isRequired
+};
+
+export default $1;
+endsnippet
+
+
+
+
+snippet rx "constants - Definition"
+export const $1_STARTED = '$2/$1_STARTED';
+export const $1_SUCCESS = '$2/$1_SUCCESS';
+export const $1_ERROR = '$2/$1_ERROR';
+export const $1_COMPLETED = '$2/$1_COMPLETED';
+
+$0
+endsnippet
+
+snippet rx "constants - import in component"
+	$1_STARTED, $1_SUCCESS, $1_ERROR, $1_COMPLETED
+endsnippet
+
+## Redux ---
+snippet rx "actions - thunk"
+export const $2_STARTED = '${1:feature}/$2_STARTED';
+export const $2_SUCCESS = '$1/$2_SUCCESS';
+export const $2_ERROR = '$1/$2_ERROR';
+export const $2_COMPLETED = '$1/$2_COMPLETED';
+
+export function $3(form) {
+	return (dispatch) => {
+		dispatch({ type: $2_STARTED });
+
+		api.$3(form)
+		.then((response) => {
+			dispatch({ type: $2_SUCCESS, payload: response.data });
+			dispatch({ type: $2_COMPLETED });
+		})
+		.catch((error) => {
+			dispatch({ type: $2_ERROR, payload: error });
+			dispatch({ type: $2_COMPLETED });
+		});
+	};
+}
+$0
+endsnippet
+
+snippet rx "actions - Action Creator"
+// move to constants file
+export const $1 = "$1"
+
+export function $2($3) {
+	return { type: $1, payload: $4 };
+}
+endsnippet
+
+
+snippet rx "PropTypes setup"
+$1.propTypes = {
+	$2: T.$3$0
+}
+endsnippet
+
+
+snippet connect "connect - Component"
+// import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+
+const mapStateToProps = (state) => {
+	return {
+		// pass subset of state to component
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		// pass actions the component needs
+		// actions: bindActionCreators({...userActions, ...orderActions}, dispatch)
+	}
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)($1)
+endsnippet
+
+snippet msp "connect - mapStateToProps"
+function mapStateToProps(state){
+	return {
+		// pass subset of state to component
+	}
+}
+endsnippet
+
+snippet mdp "connect - mapDispatchToProps"
+const mapDispatchToProps(dispatch) {
+	return {
+		// pass actions the component needs
+		// actions: bindActionCreators({...userActions, ...orderActions}, dispatch)
+	}
+}
+endsnippet
+
+
+snippet rx "imports - redux"
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+
+// import * as authActions from './actions';
+endsnippet
+
+
+snippet rx "ducks/api CRUD"
+import Api from "../../services/api";
+const url = "/$1"
+
+export default {
+getList: () => {
+	return Api.get(url);
+},
+
+get$2: permalink => {
+	return Api.get(url + '/' + permalink);
+},
+
+create$2: payload => {
+	return Api.post(url, payload);
+},
+
+update$2: (permalink, payload) => {
+	return Api.put(url + '/' + permalink, payload);
+},
+
+remove$2: permalink => {
+	return Api.delete(url + '/' + permalink);
+},
+
+};
+endsnippet
+
+snippet rx "reducer"
+const INITIAL_STATE = {};
+
+export default function(state = INITIAL_STATE, action) {
+	switch (action.type) {
+		// case SAVE_PROFILE_SUCCESS:
+		// return Object.assign({}, state, action.payload.data.profile);
+		default:
+			return state;
+	}
+}
+endsnippet
+
+
+snippet rx "Prop Types - import"
+import T from 'prop-types';
+endsnippet
+
+snippet rt "NextJS router"
+import { useRouter } from "next/router"
+// const router = useRouter()
+$0
+endsnippet
+
+snippet rt "router - import"
+
+import {
+	${1:Link}
+} from 'react-router-dom';
+
+endsnippet
+
+snippet rt "router - <Link />"
+<Link to="$1">$2</Link>
+endsnippet
+
+snippet rt "router - <Route/> component"
+<Route
+	path={\`${this.props.match.url}/$1\`}
+	render={(rprops) => <$2 {...this.props} {...rprops} />}
+/>
+endsnippet
+
+snippet rt "Admin Route"
+<AdminRoute
+	path={\`${this.props.match.url}/$1\`}
+	component={$2} {...this.props}
+/>
+endsnippet
+
+snippet rt "router - import"
+import {
+	${1:Link}
+} from 'react-router-dom';
+endsnippet
+
+snippet rt "router -<Redirect /> to path"
+<Redirect to="$1" />
+endsnippet
+
+snippet rt "router - <Switch />"
+<Switch>
+	<Route path="/$1/one" component={CompOne}/>
+	<Route path="/$1/two" component={CompTwo}/>
+	<Route path="/$1/three" component={CompThree}/>
+</Switch>
+endsnippet
+
+
+snippet st "this.state.<something>"
+this.state.$1
+endsnippet
+
+snippet st "this.setState"
+this.setState({ $1 });
+endsnippet
+
+snippet pr "props - get a prop"
+$0props.$2
+endsnippet
+
+
+snippet cn "className="
+className="$1"
+endsnippet
+
+snippet bind
+this.$1 = this.$1.bind( this );
+endsnippet
+
+snippet ctr "constructor"
+constructor( props ) {
+	super( props );
+
+	this.state = { name: '${1:Hello}' };
+}
+endsnippet
+
+snippet ren
+render() {
+	return(
+		<div>
+			${1:Hello!}
+		</div>
+	);
+}
+endsnippet
+
+
+snippet cdm "componentDidMount"
+componentDidMount() {
+	$0
+}
+endsnippet
+
+snippet cdu "componentDidUpdate"
+componentDidUpdate() {
+	$0
+}
+endsnippet
+
+snippet rx "component - Full Semantic Component"
+import React, { Component } from 'react';
+import { Accordion, Icon } from 'semantic-ui-react';
+
+export default class $1 extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = { activeIndex: 0 };
+		this.handleClick = this.handleClick.bind(this);
+	}
+
+	handleClick(e, titleProps) {
+		const { index } = titleProps;
+		const { activeIndex } = this.state;
+		const newIndex = activeIndex === index ? -1 : index;
+
+		this.setState({ activeIndex: newIndex });
+	}
+
+	render() {
+		const { activeIndex } = this.state;
+
+		return (
+			<Accordion fluid styled>
+				<Accordion.Title
+					active={activeIndex === 0}
+					index={0}
+					onClick={this.handleClick}
+				>
+					<Icon name="dropdown" />
+					One
+				</Accordion.Title>
+				<Accordion.Content active={activeIndex === 0}>
+					<p>One</p>
+				</Accordion.Content>
+
+				<Accordion.Title
+					active={activeIndex === 1}
+					index={1}
+					onClick={this.handleClick}
+				>
+					<Icon name="dropdown" />
+					Two
+				</Accordion.Title>
+				<Accordion.Content active={activeIndex === 1}>
+					<p>Two</p>
+				</Accordion.Content>
+
+				<Accordion.Title
+					active={activeIndex === 2}
+					index={2}
+					onClick={this.handleClick}
+				>
+					<Icon name="dropdown" />
+					Three
+				</Accordion.Title>
+				<Accordion.Content active={activeIndex === 2}>
+					<p>Three</p>
+				</Accordion.Content>
+			</Accordion>
+		);
+	}
+}
+
+endsnippet
+
+snippet rx "handler"
+$1(e){
+	console.log(e.target.type)
+}
+endsnippet
+
+snippet rx "component - controller"
+import React from "react";
+
+import { Switch, Route } from "react-router-dom";
+
+import Nav from "./components/Nav";
+import List from "./components/List";
+import New from "./components/New";
+import Edit from "./components/Edit";
+
+const `!p snip.rv = t[1].title()`sHome = () => {
+	return (
+		<div className="ui container">
+			<div className="ui red ribbon label">`!p snip.rv = t[1].title()`s Home</div>
+			<div className="ui hidden divider" />
+			<div className="ui container">
+				<div className="ui two column grid">
+					<div className="three wide column">
+						<Nav />
+					</div>
+					<div className="thirteen wide column">
+						<Switch>
+							<Route path="/$1s/list" component={List} />
+							<Route path="/$1s/new" component={New} />
+							<Route path="/$1s/edit/:$1ID" component={New} />
+							<Route path="/" component={List} />
+						</Switch>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export default `!p snip.rv = t[1].title()`sHome;
+
+endsnippet
+
+snippet ox "Rx Observable"
+const $1$ = Rx.Observable.${2:fromEvent(button, 'click')}
+$1$.subscribe(
+	x => console.log('$1 stream event'),
+	err => console.log('$1 Stream error', err),
+	e => console.log('$1 stream completed')
+);
+endsnippet
+
+snippet pr "Prop Types - import"
+import T from 'prop-types';
+endsnippet
+
+snippet pr "Prop Types - define validations"
+$1.propTypes = {
+	$2: T.$0
+}
+endsnippet
+
+snippet pr "Prop Types - single validation"
+$1: PropTypes.$0
+endsnippet
+
+snippet pr "Prop Types - isRequired"
+$1: PropTypes.isRequired$0
+endsnippet
+
+snippet sem "field"
+<div className={ `six wide field ${ errors.$1 ? 'error' : '' }` }>
+	<label htmlFor="$1">$2</label>
+	<input type="${3:text}" name="$1" id="$1" placeholder="$2" onChange={handleChange}/>
+</div>
+$0
+endsnippet
+
+snippet ust
+const [$1, set`!p
+from inflection import camelize
+snip.rv = camelize(t[1])
+`] = useState($2)
+$0
+endsnippet
+
+snippet ue
+useEffect(() => {
+	$1
+
+// return () => {}
+}, [$0])
+endsnippet
+
+snippet ifn
+if(!$1) {
+	$0
+}
+endsnippet
+
+snippet fc
+const $1 = () => {
+	return (
+		$2
+	)
+}
+
+export default $1;
+endsnippet
+
+snippet ed
+export default $1;
+endsnippet
+
+snippet icon
+import { ${1:Home} } from '@styled-icons/ionicons-outline';
+endsnippet
+
+snippet icon
+<$1 size={'2em'} />
+endsnippet
+
+snippet page
+import React from "react";
+import AuthLayout from "components/layouts/AuthLayout";
+
+const $1 = () => {
+return (
+	<AuthLayout>
+		<div className="card">
+			<div className="card-header">
+				$1 Starter Page
+			</div>
+			<div className="card-body">
+				<div className="text-center">
+					<button className="btn btn-primary">Add your first product</button>
+				</div>
+			</div>
+		</div>
+	</AuthLayout>
+);
+};
+
+export default $1;
+endsnippet
+
+snippet formik
+// import { AuthField, AuthButton } from "components/forms";
+// import { string, object } from "yup";
+
+const ${1:schema} = object().shape({
+	email: string().email().required("Email is required"),
+	displayName: string()
+		.min(2, "Name too small")
+		.max(50, "Name too long")
+		.required("Name is required"),
+	mobile: string()
+		.matches(validators.PHONE_REGEX, "Invalid phone")
+		.required("Mobile number is required"),
+	password: string()
+		.min(6, "Password too small")
+		.max(15, "Password too long")
+		.required("Password is required"),
+});
+
+const [form, setForm] = useState({
+	displayName: "",
+	email: "",
+	password: "",
+	mobile: "",
+});
+
+const newForm = (
+	<Formik
+		initialValues={form}
+		onSubmit={(values, actions) => {
+			console.log("Form values", { ...values })
+		}}
+		validationSchema={$1}
+	>
+		{(props) => (
+			<Form>
+				<AuthField name={"displayName"} label={"Full Name"} />
+				<AuthField name={"email"} label={"Email"} />
+				<AuthField name={"mobile"} label={"Mobile Phone"} />
+				<AuthField type={"password"} name={"password"} label={"Password"} />
+
+				<AuthButton text={"Sign up"} />
+			</Form>
+		)}
+	</Formik>
+);
+endsnippet
+
+snippet nx "Link"
+// import Link from "next/link"
+<Link href="/$1"><a>$2</a></Link>
+$0
+endsnippet
+
+snippet link "Link"
+// import Link from "next/link"
+<Link href="/$1"><a>$2</a></Link>
+$0
+endsnippet
+
+# React & JSX
+snippet rrcc "React Redux Class Component" b
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import styles from './${2:$1}.css';
+
+class ${1:`!v expand('%:t:r')`} extends Component {
+	static propTypes = {
+		children: PropTypes.node,
+		className: PropTypes.string,
+		dispatch: PropTypes.func.isRequired,
+	};
+
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return (
+			<div className={styles.base}>
+				$3
+			</div>
+		);
+	}
+}
+
+function mapStateToProps(state) {
+	return {};
+}
+
+export default connect(mapStateToProps)($1);
+endsnippet
+
+snippet rcc "React Class Component" b
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import styles from './${2:$1}.css';
+
+class ${1:`!v expand('%:t:r')`} extends Component {
+	static propTypes = {
+		${2:children: PropTypes.node,
+		className: PropTypes.string,}
+	};
+
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return (
+			<${3:div} className={styles.base}>
+				$0
+			</$3>
+		);
+	}
+}
+
+export default $1;
+endsnippet
+
+snippet rfc "React Functional Component" b
+// import styles from './$1.module.scss';
+
+const ${1:`!p snip.rv = ''.join(x.title() for x in re.sub('\.js$', '', snip.basename or 'ModuleName').split('_'))`} = ({}) => {
+	return (
+		<p>$1</p>
+	);
+}
+
+export default $1; $0
+endsnippet
+
+snippet rsc "React Styled Component" b
+import styled from 'styled-components';
+
+const ${1:`!v expand('%:t:r')`} = styled.${2:div}\`
+	$3
+\`;
+
+export default $1;
+endsnippet
+
+snippet rsci "React Styled Component Interpolation" b
+import styled, { css } from 'styled-components';
+
+const ${1:`!v expand('%:t:r')`} = styled.${2:div}\`${props => css\`
+	${3:${props.$4 && \`
+		$5
+	\`}}
+\`}\`;
+
+export default $1;
+endsnippet
+
+snippet pp "Get Props"
+${props => props.${1}};
+endsnippet
+
+snippet cn "className"
+className="$1"
+endsnippet
+
+snippet dp "Default Props" b
+${1:`!v expand('%:t:r')`.}defaultProps = {
+	$2
+};
+endsnippet
+
+snippet set "Set State"
+this.setState({
+	${1}: ${2}
+});
+endsnippet
+
+snippet props "Get Property" i
+this.props.${1}
+endsnippet
+
+snippet state "Get State" i
+this.state.${1}
+endsnippet
+
+snippet ref "Ref" i
+ref={${1:ref} => { this.${2:name} = $1; }}
+endsnippet
+
+
+# Component Lifecycle
+snippet cwm "Component Will Mount" b
+componentWillMount() {
+	$1
+}
+endsnippet
+
+snippet cdm "Component Did Mount" b
+componentDidMount() {
+	$1
+}
+endsnippet
+
+snippet cwrp "Component Will Receive Props" b
+componentWillReceiveProps(nextProps) {
+	$1
+}
+endsnippet
+
+snippet scup "Should Component Update" b
+shouldComponentUpdate(nextProps, nextState) {
+	$1
+}
+endsnippet
+
+snippet cwup "Component Will Update" b
+componentWillUpdate(nextProps, nextState) {
+	$1
+}
+endsnippet
+
+snippet cdup "Component Did Update" b
+componentDidUpdate(prevProps, prevState) {
+	$1
+}
+endsnippet
+
+snippet cwu "Component Will Unmount" b
+componentWillUnmount() {
+	$1
+}
+endsnippet
+
+snippet ren "Render"
+render() {
+	return ${1:(
+		${2:<div>${3}</div>}
+	);}
+}
+endsnippet
+
+
+# PropTypes
+snippet pt "PropTypes Definition" b
+${1:`!v expand('%:t:r')`.}propTypes = {
+	${2:className}: ${3:PropTypes.string},
+};
+endsnippet
+
+snippet  pt.a "PropTypes Array" w
+PropTypes.array${1:,}
+endsnippet
+
+snippet   pt.b "PropTypes Boolean" w
+PropTypes.bool${1:,}
+endsnippet
+
+snippet pt.f "PropTypes Function" w
+PropTypes.func${1:,}
+endsnippet
+
+snippet pt.n "PropTypes Number" w
+PropTypes.number${1:,}
+endsnippet
+
+snippet pt.o "PropTypes Object" w
+PropTypes.object${1:,}
+endsnippet
+
+snippet pt.s "PropType String" w
+PropTypes.string${1:,}
+endsnippet
+
+snippet pt.no "PropTypes Node" w
+PropTypes.node${1:,}
+endsnippet
+
+snippet pt.e "PropTypes Element" w
+PropTypes.element${1:,}
+endsnippet
+
+snippet pt.io "PropTypes instanceOf" w
+PropTypes.instanceOf(${2:PropTypes.string})${1:,}
+endsnippet
+
+snippet pt.one "PropTypes oneOf" w
+PropTypes.oneOf(['$2'$3])${1:,}
+endsnippet
+
+snippet pt.onet "PropTypes oneOfType" w
+PropTypes.oneOfType([
+	$2
+])${1:,}
+endsnippet
+
+snippet pt.ao "PropTypes arrayOf" w
+PropTypes.arrayOf(${2:PropTypes.string})${1:,}
+endsnippet
+
+snippet pt.oo "PropTypes objectOf" w
+PropTypes.objectOf(${2:PropTypes.string})${1:,}
+endsnippet
+
+snippet pt.sh "PropTyes Shape" w
+PropTypes.shape({
+	$2
+})${1:,}
+endsnippet
+
+snippet ir "isRequired" w
+isRequired,
+endsnippet
+
+snippet us.s "useState" w
+const [$1, set${1/\w+\s*/\u$0/g}] = useState(${3:''})${0:;}
+endsnippet
+
+snippet us.e "useEffect" w
+useEffect(() => {
+  $1
+})${0:;}
+endsnippet
+
+snippet us.er "useEffect with return" w
+useEffect(() => {
+  $1
+	return () => {
+    $2
+	};
+})${0:;}
+endsnippet
+
+snippet us.c "useContext" w
+const $1 = useContext($2)${0:;}
+endsnippet
+
+snippet us.r "useReducer" w
+const [$1, dispatch] = useReducer($1Reducer, ${2:${VISUAL:initialState}})
+const $1Reducer = (state, action) => {
+	switch (action.type) {
+		default:
+			return state;
+	}
+}${0:;}
+endsnippet
+
+snippet us.cb "useCallback" w
+useCallback(
+	() => {
+		$1
+	},
+	[$2],
+)${0:;}
+endsnippet
+
+snippet us.m "useMemo" w
+const $1 = useMemo(() => {
+	$2
+}, [$3])${0:;}
+endsnippet
+
+snippet us.rf "useRef" w
+const $1 = useRef($2)${0:;}
+endsnippet
+
+
+snippet cc "createClass" b
+var ${1:`!p snip.rv = ''.join(x.title() for x in re.sub('\.js$', '', snip.basename or 'ModuleName').split('_'))`} = React.createClass({
+	/**
+	 * @return {Object}
+	 */
+	render: function() {
+		return (
+			$0
+		);
+	}
+});
+
+module.exports = $1;
+endsnippet
+
+snippet app
+<div id={'appCapsule'}>
+	$0
+</div>
+endsnippet
+
+snippet n "n times map"
+[...Array(4)].map((_, i) => console.log('loop index', i)
+endsnippet
+
+snippet ed
+export default $1
+endsnippet
+
+snippet inr
+&#8377; $1
+endsnippet
+
+snippet rt
+// import { useRouter } from 'next/router'
+const router = useRouter()
+endsnippet
+
+snippet h
+const $1 = (e) => {
+	e.preventDefault()
+
+	$0
+}
+endsnippet
+
+snippet img
+<AppImage width={150} height={150} img={'affan/bg-img/p1.jpg'} />
+endsnippet

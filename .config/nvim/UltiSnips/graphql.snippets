@@ -1,0 +1,107 @@
+snippet gql
+extend type Mutation {
+
+}
+
+extend type Query {
+
+}
+endsnippet
+
+snippet schema
+extend type Mutation {
+
+}
+
+extend type Query {
+
+}
+endsnippet
+
+snippet ty
+type $1 implements Node {
+	id: ID!
+	createdAt: DateTime!
+	updatedAt: DateTime
+
+	$0
+}
+endsnippet
+
+snippet input
+input $1 {
+	$0
+}
+endsnippet
+
+snippet str
+$1: String!
+endsnippet
+
+snippet id
+id: ID!
+endsnippet
+
+
+# snip.rv = '(input: %sInput!): %sResponse!' % (camelize(t[1]), camelize(t[1]))
+snippet mu
+$1`!p
+from inflection import camelize
+
+token = camelize(t[1])
+
+s = '''\
+(input: %sInput!): %sResponse!
+# input %sInput {}
+# type %sResponse {
+	# id: ID!
+# }
+''' % (token, token, token, token)
+
+snip.rv=s
+`
+$0
+endsnippet
+
+snippet crud "methods"
+# $1 CRUD methods
+`!p
+from inflection import camelize
+
+token = camelize(t[1])
+
+s = '''\
+	create%s(input: Create%sInput!): %s!
+	update%s(input: Update%sInput!): %s!
+	delete%s(input: Delete%sInput!): %s!
+''' % (token, token, token, token, token, token, token, token, token)
+
+snip.rv=s
+`
+$0
+endsnippet
+
+snippet crud "types"
+# $1 input types
+`!p
+from inflection import camelize
+
+token = camelize(t[1])
+
+s = '''\
+input Create%sInput  {
+	id: ID!
+}
+
+input Update%sInput {
+	id: ID!
+}
+
+input Delete%sInput {
+	id: ID!
+}
+''' % (token, token, token)
+
+snip.rv = s
+`
+endsnippet

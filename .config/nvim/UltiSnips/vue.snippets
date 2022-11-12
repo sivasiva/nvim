@@ -1,0 +1,22 @@
+extends html
+
+
+snippet comp "Vue 2 Component"
+<template>
+	<div class='$1'>
+		<h4>{{ msg }}</h4>
+	</div>
+</template>
+
+<script>
+	export default {
+		name: '$1',
+		data () {
+			return {
+				msg: 'Hello from $1'
+			}
+		}
+	}
+</script>
+endsnippet
+

@@ -1,0 +1,170 @@
+snippet consul
+consul:
+	command: -server -bootstrap -rejoin
+	image: progrium/consul:latest
+	ports:
+		- "8300:8300"
+		- "8400:8400"
+		- "8500:8500"
+		- "8600:53/udp"
+endsnippet
+
+snippet sec
+# -----------------------------------
+# $1
+# -----------------------------------
+endsnippet
+
+snippet comm
+# -----------------------------------
+# $1
+# -----------------------------------
+endsnippet
+
+snippet ans "timestamp"
+# http://www.mydailytutorials.com/working-date-timestamp-ansible/
+- set_fact:
+		timestamp: "{{ ansible_date_time.iso8601_basic_short }}"
+endsnippet
+
+snippet ans "base"
+---
+- name: $1 - dirs
+	become: yes
+	file:
+		path: '{{ item }}'
+		state: directory
+		owner: '{{ user_name }}'
+		group: '{{ user_name }}'
+	loop:
+		- '{{ user_home }}/.ssh'
+
+- name: $1 - config files
+	template:
+		src: '{{ item.src }}'
+		dest: '{{ item.dest }}'
+	loop:
+		- { src: '../templates/init.sql.j2', dest: '{{ user_home }}/db/init.sql' }
+endsnippet
+
+snippet ans "template files"
+- name: $1 - config files
+	template:
+		src: '{{ item.src }}'
+		dest: '{{ item.dest }}'
+	loop:
+		- src: '../templates/init.sql.j2'
+			dest: '{{ user_home }}/db/init.sql'
+endsnippet
+
+snippet ddd "context"
+- name: lecturer
+	services:
+		- name: registering
+			api:
+				- NewLecturer(userId)(lecturerId)
+				- AddProfile(lecturerId, profileId)(lecturerId)
+		- name: scheduling
+	entities:
+	types:
+	commands:
+	queries:
+endsnippet
+
+snippet ddd "scaffold"
+---
+project:
+	app: ddd
+	root: /Users/siva/src/github.com/TulsiTech/ddd
+	module: github.com/TulsiTech/ddd
+	version: v1
+
+notes:
+	- https://youtu.be/YfLPZOpJQjY?t=654
+
+contexts:
+	- name: lecturer
+		services:
+			- name: registering
+				api:
+					- NewLecturer(userId)(lecturerId)
+					- AddProfile(lecturerId, profileId)(lecturerId)
+			- name: scheduling
+endsnippet
+
+snippet cert
+- name: ${1:abbr} ${2:stream_or_product_name}
+	level: $1
+	${3:stream_or_product}: $2
+	steps:
+		$0
+endsnippet
+snippet st "exam"
+- type: Exam
+	code: 70-$1
+	name: $2
+	training:
+		- type: optional
+			code: 20-$1
+			name: $2
+$0
+endsnippet
+snippet st "cert"
+- type: Certification
+	name: $1
+$0
+endsnippet
+snippet tr
+- type: ${1:optional}
+	code: $2
+	name: $3
+endsnippet
+snippet %
+<%= $1 %>$0
+endsnippet
+snippet %=
+<%= $1 %>$0
+endsnippet
+
+
+snippet pg "PG database.yml" b
+development:
+	database: dhsdemo_dev
+	host: localhost
+	port: 5432
+	adapter: postgresql
+	encoding: unicode
+	username: postgres
+
+test:
+	database: dhsdemo_dev
+	host: localhost
+	port: 5432
+	adapter: postgresql
+	encoding: unicode
+	username: postgres
+endsnippet
+
+snippet comm "comment block"
+#------------------------------------------
+# $0
+#------------------------------------------
+endsnippet
+
+snippet tmuxp "tmxup base template"
+session_name: ${1:project}
+start_directory: ./
+windows:
+	- window_name: main
+		panes:
+		- cal
+	- window_name: one
+		panes:
+		- cal
+	- window_name: two
+		panes:
+		- cal
+	- window_name: three
+		panes:
+		- v
+endsnippet

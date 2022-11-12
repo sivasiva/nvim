@@ -1,0 +1,1142 @@
+snippet here
+$1 = <<-${2:FUNC}
+$0
+$2
+endsnippet
+
+snippet doc
+$1 = <<-${2:FUNC}
+$0
+$2
+endsnippet
+
+snippet wi
+with_indifferent_access
+endsnippet
+
+snippet acc
+with_indifferent_access
+endsnippet
+
+snippet def
+def ${1:name}
+	$0
+end
+endsnippet
+
+snippet ind
+$1.with_indifferent_access
+endsnippet
+
+snippet di
+$1.with_indifferent_access
+endsnippet
+
+snippet ren
+def $1
+	render
+end $0
+endsnippet
+
+snippet enum
+enum ${1:status}: { initial: 0${2:, others}  }
+endsnippet
+
+snippet p?
+${1}.present?
+endsnippet
+
+snippet concern
+module $1
+	extend ActiveSupport::Concern
+
+	included do
+		# Scopes
+
+	end
+
+	# Instance methods
+
+
+	# Class methods
+	module ClassMethods
+
+	end
+end
+endsnippet
+
+snippet time
+$1.strftime( "%A %b %d, %Y" )
+endsnippet
+
+snippet tfmt
+$1.strftime( "%A %b %d, %Y" )
+endsnippet
+
+snippet ago
+# Needs to	'include ActionView::Helpers::DateHelper'
+time_ago_in_words( ${1:created_at} )
+endsnippet
+
+snippet tformat
+time = Time.now
+
+puts "Timer: " + time.strftime( "%c" ).gsub( ' ', '_' ).gsub( ':', '_' )
+puts "Time 2: " + time.strftime( "%b%d%G_%H%M%S" )
+endsnippet
+
+snippet step
+{ track: '$1', level: '$2', cert: '$3' }$0
+endsnippet
+
+snippet yml
+Dir.glob( [ File.join( Rails.root, 'data', '$1', '*.yml' ) ] ).each do |f|
+	dt = HashWithIndifferentAccess.new( YAML::load_file( f ) )
+end
+endsnippet
+
+snippet tap
+{}.tap { |hash| $0 }
+endsnippet
+
+snippet map
+$1.map { |x| $0 }
+endsnippet
+
+snippet collect
+$1.collect { |x| $0 }
+endsnippet
+
+snippet ei
+$1.each_with_index do |x, idx|
+	$0
+end
+endsnippet
+
+snippet ewi
+$1.each_with_index do |x, idx|
+	$0
+end
+endsnippet
+
+snippet wi
+$1.each_with_index do |x, idx|
+	$0
+end
+endsnippet
+
+snippet fmt
+respond_to do |fmt|
+	$0
+
+	fmt.html
+	fmt.js
+end
+endsnippet
+
+snippet lorem
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id odio maximus, accumsan felis pretium, rhoncus est. Nunc lorem ipsum, sagittis et dolor id, bibendum mollis purus. Nullam vitae tellus in nibh sollicitudin maximus. Aliquam pulvinar condimentum diam, nec vehicula nibh fringilla id. Nulla posuere, arcu ac maximus auctor, tortor tellus sodales sem, ut mollis orci sem vel erat. Integer vitae dictum nunc. Proin pharetra posuere ante, ut fermentum tortor mattis quis. Phasellus eu posuere quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas malesuada tellus ligula, non porta erat rhoncus ac.
+endsnippet
+
+snippet wia
+$1.with_indifferent_access
+endsnippet
+
+snippet res
+respond_to do |fmt|
+	fmt.js { render :update }
+end
+endsnippet
+
+snippet yload
+dt = YAML.load_file( f ).with_indifferent_access
+endsnippet
+
+snippet dload
+Dir.glob( [ File.join( CONTENT_ROOT, '$1', '*.yml' ) ] ).each do |f|
+	dt = YAML.load_file( f ).with_indifferent_access
+
+	$0
+
+end
+endsnippet
+
+snippet ?
+$1.present? $0
+endsnippet
+
+snippet random "Number" b
+rand(${1:max_range})
+endsnippet
+
+snippet api "base template"
+class Api::V1::$1 < Grape::API
+	before do
+		ensure_authentication
+	end
+
+	resources $2 do
+		$0
+	end
+end
+endsnippet
+
+snippet api "CRUD Template"
+class Api::V1::$1s < Grape::API
+	before do
+		#ensure_authentication
+		#ensure_site_admin
+	end
+
+	resources :$2 do
+		# GET List
+		desc 'Get list'
+		get do
+			$1.all
+		end
+
+		# POST record
+		desc 'Add record'
+		params do
+		end
+		post do
+			c = $1.new( params )
+
+			if c.save
+				c
+			else
+				{ errors: c.errors.messages }
+			end
+		end
+
+		# PUT record
+		#desc "Update record"
+		#params do
+			##requires :email, type: String, allow_blank: false
+		#end
+		#put do
+
+		#end
+
+		## DELETE record
+		#desc 'Delete record'
+		#params do
+			##requires :email, type: String, allow_blank: false
+		#end
+		#delete do
+
+		#end
+	end
+end
+
+
+
+endsnippet
+
+snippet api "GET" b
+	# GET List
+	desc 'Get list'
+	get do
+		5.times.collect do
+			{
+				first_name: FFaker::Name.first_name,
+				last_name: FFaker::Name.last_name,
+				email: FFaker::Internet.email
+			}
+		end
+	end
+endsnippet
+
+snippet api "POST"
+	params do
+		requires :data, type: Hash do
+			# requires :email, type: String, regexp: /.+@.+/
+			$0
+		end
+	end
+	post $1 do
+		p = sanitized( params, :data )
+
+		Rails.logger.info '---------------------------------$2'
+		Rails.logger.info "#{ p.inspect }"
+		Rails.logger.info '---------------------------------$2'
+
+		p
+	end
+endsnippet
+
+snippet api "PUT"
+	params do
+		requires :data, type: Hash do
+			# requires :email, type: String, regexp: /.+@.+/
+			$0
+		end
+	end
+	put $1 do
+		p = sanitized( params, :data )
+
+		Rails.logger.info '---------------------------------$2'
+		Rails.logger.info "#{ p.inspect }"
+		Rails.logger.info '---------------------------------$2'
+
+		p
+	end
+endsnippet
+
+snippet api "DELETE" b
+# DELETE record
+desc 'Delete record'
+params do
+	#requires :email, type: String, allow_blank: false
+end
+delete do
+	$0
+end
+endsnippet
+
+snippet reqs
+requires :$1, type: ${2:String}, allow_blank: false
+$0
+endsnippet
+
+snippet api "params"
+params do
+	requires :data, type: Hash do
+		# requires :email, type: String, regexp: /.+@.+/
+		$0
+	end
+end
+endsnippet
+
+snippet pres
+present current_user.account, with: User::AccountRepresenter
+endsnippet
+snippet hmt
+has_many :${1}
+has_many :${2}, through: :$1
+endsnippet
+snippet gin
+add_index :${1:table}, :${2:column}, using: 'gin'
+endsnippet
+snippet fb
+${1:Model}.find_by( $0 )
+endsnippet
+snippet ea
+${1}.each do |${2}|
+	$0
+end
+endsnippet
+snippet csv
+require 'csv'
+
+CSV.foreach( ${1:file}, headers: true, encoding: 'windows-1251:utf-8' ) do |row|
+	$0
+end
+endsnippet
+snippet vpo "ar"
+validates :$1, presence: true
+endsnippet
+snippet uniq "ar"
+uniqueness: true
+endsnippet
+snippet scope
+scope :$1, -> ( $2 ) { joins( ${3:non-polymorphic-assos} ).where( ${4:conditions} ) if $2.present? }
+endsnippet
+snippet prop
+property :$1
+$0
+endsnippet
+snippet rlog
+Rails.logger.info '>>>>>>>>>>>>>>>>>>>>>>>---------------------------------${1:key}'
+Rails.logger.info "$0#{ ${2:matter}${3:.inspect} }"
+Rails.logger.info '>>>>>>>>>>>>>>>>>>>>>>>---------------------------------$1'
+endsnippet
+snippet rl
+Rails.logger.info '---------------------------------${1:key}'
+Rails.logger.info "$0#{ ${2:matter}${3:.inspect} }"
+Rails.logger.info '---------------------------------$1'
+endsnippet
+snippet rli
+Rails.logger.info "$0#{ ${1:matter}${2:.inspect} }"
+endsnippet
+snippet plog
+puts '---------------------------------${1:key}'
+puts "#{ ${2:matter} }"
+puts '---------------------------------$1'
+endsnippet
+snippet comm
+# ${1:comment}
+endsnippet
+snippet todo
+# TODO $0
+endsnippet
+snippet ref
+# Ref: ${1:url}
+endsnippet
+snippet skip
+skip_authorization_check
+skip_before_action :authenticate_user!
+endsnippet
+
+snippet cu "Step Definition"
+When(/^$1$/) do
+	steps %($0)
+end
+endsnippet
+
+snippet cu "Background"
+Background:
+	Given the following users exist:
+		| id | first_name | last_name |
+		| 1  | Steve      | Richert   |
+		| 2  | Catie      | Richert   |
+	And "Steve Richert" is friends with "Catie Richert"
+endsnippet
+
+snippet j "JSON step definition" b
+When(/^${1:I perform registration with the required parameters}$/) do
+	# Populate request information
+	@request_method = "${2:POST}"
+	@request_url = "/api/v1/$3"
+	@request_body = {email: generateEmail, password: "pass123", terms_accepted: true}
+	@successful_response_code = 201
+	@error_response_code_email_reserved = 409
+end
+
+Then(/^the request should be successful$/) do
+	# Perform the request and assert the response code
+	@response = RestApi.call(@request_method, @request_url, body: @request_body, expect: @successful_response_code)
+end
+
+Then(/^I should receive a valid access token$/) do
+	# ... test that the token in @response is valid
+end
+endsnippet
+
+snippet trigger "Trigger with jQuery" b
+page.execute_script("$('$1').trigger('$2');")
+endsnippet
+
+snippet glob
+Dir.glob( [ File.expand_path( Rails.root ), ${1:'db', 'sql', 'devise', '**/*.sql' } ].join( '/' ) ).each do |fi|
+	fcontent = File.open( fi, 'rb' ) { |fo| fo.read }
+	# run sql
+end
+endsnippet
+snippet gems "ENR Local Dev gems"
+group :development, :test do
+	gem 'guard-cucumber'
+	gem 'guard-teaspoon'
+	gem 'spring-commands-teaspoon'
+	gem 'guard-ctags-bundler'
+	gem 'guard-brakeman'
+	gem 'guard-bundler-audit'
+end
+endsnippet
+snippet thor
+desc '${1:description}', '${2:details}'
+# option :tags
+def $1 ${3:params}
+end
+endsnippet
+snippet action
+class ${1:Hex}::${2:Feature}::${3:Class}
+
+	def initialize( attrs )
+		@user = attrs[:user]
+		@params = attrs[:params]
+		${4}
+	end
+
+	def process
+	end
+end
+endsnippet
+snippet defi
+def initialize${1:( attrs )}
+	$0
+end
+endsnippet
+snippet defs
+def self.${1:name}
+	$0
+end
+endsnippet
+snippet t
+I18n.t( '${1:key}' )
+endsnippet
+snippet settings
+Rails.application.config.settings.${1:key}
+endsnippet
+snippet secrets
+Rails.application.secrets.${1:key}
+endsnippet
+snippet req
+require '${1:lib}'
+endsnippet
+snippet runner
+class ${1:FQDN}
+	def initialize( attrs )
+		@user     = attrs[ :user ]
+	end
+
+	def process
+	end
+end
+endsnippet
+snippet fo
+#
+# http://webuild.envato.com/blog/creating-form-objects-with-activemodel-and-virtus/
+#
+class $1::$2Form
+
+	include ActiveModel::Model
+	include Virtus.model
+
+	attribute :name, String
+
+	#
+	# Validations
+	#
+	%i[  ].each do |f|
+		validates f, presence: true
+	end
+
+	def save
+
+		Rails.logger.info '---------------------------------$2Form Attrs'
+		Rails.logger.info "#{ attributes.inspect }"
+		Rails.logger.info '---------------------------------$2Form Attrs'
+
+		if valid?
+			persist!
+			true
+		else
+			false
+		end
+	end
+
+	private
+
+	def persist!
+		# TODO: implement save logic
+
+	end
+end
+endsnippet
+
+snippet mc
+module $1
+	class $2
+		def initialize( attrs )
+			@attrs = attrs
+		end
+
+		def process
+			$0
+		end
+	end
+end
+endsnippet
+snippet highline "skeleton"
+#!/usr/bin/env ruby
+
+require "rubygems"
+require "highline/import"
+
+$0
+endsnippet
+snippet choose
+$1 = choose do |menu|
+	menu.prompt = '$2'
+
+	menu.choices( $0 )
+end
+endsnippet
+snippet ask
+$1 = ask( "$2 :" ) { |q| q.default = '$0' }
+endsnippet
+snippet jp
+JSON.parse( $1, symbolize_names: true )
+endsnippet
+snippet amb
+ActionMailer::Base.deliveries${1:.clear}
+endsnippet
+snippet mail
+$1Mailer.${2:method_name}( ${3:params} ).deliver_now
+endsnippet
+snippet mail "method"
+def $1( $2 )
+	$0
+	mail to: $3, subject: "$4"
+end
+endsnippet
+snippet dt
+def test_$1
+	$0
+end
+endsnippet
+
+snippet ae
+assert_equal ${1:expected}, ${2:actual}
+endsnippet
+
+snippet test
+require 'test_helper'
+
+class $1Test < ActiveSupport::TestCase
+	before do
+
+	end
+
+	describe 'test' do
+		it 'can count' do
+			assert_equal 2 + 2, 8
+		end
+	end
+
+	$0
+end
+endsnippet
+
+snippet me
+$1.must_equal $0
+endsnippet
+
+snippet mi
+$1.must_include $0
+endsnippet
+
+snippet eq
+$1.must_equal $0
+endsnippet
+
+snippet asd
+assert_difference '${1}.count', ${2:+1} do
+	$0
+end
+endsnippet
+
+snippet setup
+def setup
+	$0
+end
+endsnippet
+
+snippet bd
+before do
+	$0
+end
+endsnippet
+
+snippet td
+def teardown
+	$0
+end
+endsnippet
+
+snippet asdm
+it 'sends a mail' do
+	assert_difference 'ActionMailer::Base.deliveries.size', +1 do
+		$0
+	end
+end
+endsnippet
+
+snippet mail "test"
+it '$1' do
+	mail = ${2:MailerClass}.${3:method}( attrs )
+	mail.subject.must_match '${4:subject}'
+	mail.to.must_include ${5:to_address}
+	mail.from.must_include Rails.application.config.settings.mail.from
+end
+endsnippet
+
+snippet ajax
+xhr :${1:get}, :${2:action}, ${3:param_hash}, format: :js
+
+json = JSON.parse( @response.body )
+#json.must_be_instance_of Array
+#json.length.must_equal 0
+#%i( id title ).each do |key|
+#	json.first.keys.must_include key.to_s
+#end
+endsnippet
+
+snippet irt
+it 'routes to $1' do
+	assert_routing '$2', { controller: '${3:$2}', action: '$4', $0 }
+end
+endsnippet
+
+snippet stub
+$1.stub(:$2, $3) do
+	$0
+end
+endsnippet
+
+snippet os
+OpenStruct.new( $0 )
+endsnippet
+
+snippet irt "Routing Test template"
+require "test_helper"
+
+class $1 < ActionDispatch::IntegrationTest
+	def test_messages
+		assert_generates '/$2', controller: "$2", action: "$3"
+	end
+end
+endsnippet
+
+snippet test "blah"
+blah
+endsnippet
+
+snippet attachment
+has_attached_file :${1}
+endsnippet
+snippet attachable
+has_many :attachments, as: :attachable
+endsnippet
+snippet hstore "nested"
+serialize :${1}, ActiveRecord::Coders::NestedHstore
+endsnippet
+snippet rep
+require 'roar/json'
+
+module $1Representer
+	include Roar::JSON
+	include Grape::Roar::Representer
+
+	#self.representation_wrap = 'auth'
+
+	property :id
+end
+endsnippet
+snippet api "Rspec api template"
+require 'rails_helper'
+
+RSpec.describe '$1', type: :request do
+	it 'GET $2' do
+		get '$2'
+
+		json = JSON.parse(response.body)
+
+		expect(response).to be_success
+		expect(json['message']).to eq 'Hello Guest'
+	end
+end
+endsnippet
+
+snippet api "Airborne"
+require 'airborne'
+
+Rspec.describe 'sample spec' do
+	it 'should validate types' do
+		get 'http://example.com/api/v1/simple_get' #json api that returns { "name" : "John Doe" }
+		expect_json_types(name: :string)
+	end
+
+	it 'should validate values' do
+		get 'http://example.com/api/v1/simple_get' #json api that returns { "name" : "John Doe" }
+		expect_json(name: 'John Doe')
+	end
+end
+endsnippet
+snippet spec "interactor"
+require 'spec_helper'
+
+describe $1 do
+	let( :attrs ) {  }
+	subject( :ctxt ) { $1.call( attrs ) }
+
+	describe '.call' do
+		$0
+	end
+end
+endsnippet
+
+snippet spec "model"
+require 'rails_helper'
+
+RSpec.describe ${1:Model}, type: :model do
+	pending "add some examples to (or delete) #{__FILE__}"
+end
+endsnippet
+
+snippet spec "hex"
+require 'spec_helper'
+
+describe Hex::${1:Feature}::${2:Action} do
+	${3:content}
+end
+endsnippet
+
+snippet idb "simple"
+it { should have_db_column( :${1:column} ).of_type( :${2:string} )$0 }
+endsnippet
+
+snippet idb "index"
+it { should have_db_index( :${1} ) }
+$0
+endsnippet
+
+snippet idb "belong to"
+it { should belong_to :${1:model} }
+it { should have_db_column( :$1_id ).of_type( :integer ) }
+it { should have_db_index :$1_id }
+endsnippet
+
+snippet idb "with_options"
+it { should have_db_column( :${1:column} ).of_type( :${2:string} ).with_options( $0 ) }
+endsnippet
+
+snippet idb "array"
+it { should have_db_column( :${1:column} ).of_type( :${2:string} ).with_options( array: true, default: [] ) }
+it { should have_db_index( :$1 ) }
+endsnippet
+
+snippet idb "has_many"
+it { should have_many :${1:plural_models} }
+endsnippet
+
+snippet idb "has_many :through"
+it { should have_many :${1:xxx} }
+it { should have_many(:${2:yyy}).through( :$1 ) }
+endsnippet
+
+snippet iv "presence"
+it { should validate_presence_of $1 $0 }
+endsnippet
+
+snippet iv "uniqueness"
+it { should validate_uniqueness_of $1 $0 }
+endsnippet
+
+snippet spec "api"
+require 'spec_helper'
+
+describe Hex::${1:Feature}::${2:Action} do
+	${3:content}
+end
+endsnippet
+
+snippet fc
+FactoryGirl.create :${1:model}
+endsnippet
+
+snippet allow
+allow( ${1:obj} ).to receive( :${2:method} ) { ${3:return} }
+endsnippet
+
+snippet rth
+require 'test_helper'
+endsnippet
+
+snippet mt
+require 'test_helper'
+
+describe ${1:Class} do
+	it 'does something' do
+		assert_equal 2+2, 5
+	end
+end
+endsnippet
+
+snippet rrh
+require 'rails_helper'
+endsnippet
+
+snippet apis
+require 'rails_helper'
+
+RSpec.describe Api::V1::${1:Class}, type: :request do
+	let( :url ) { '/api/v1/${2:url}'}
+end
+endsnippet
+
+snippet change
+it '${1:desc}' do
+	expect { ${2:condition} }.to change( ${3:Model}, :count ).by( ${4:1} )
+end
+endsnippet
+
+snippet count
+it '${1:desc}' do
+	expect { ${2:condition} }.to change( ${3:Model}, :count ).by( ${4:1} )
+end
+endsnippet
+
+snippet ipoly
+it { should belong_to :${1:poly} }
+it { should have_db_column( :$1_id ).of_type( :integer ) }
+it { should have_db_column( :$1_type ).of_type( :string ) }
+endsnippet
+
+snippet runs
+require 'rails_helper'
+
+RSpec.describe Hex::${1:FQDN} do
+	let( :user ) { create :user }
+	let( :attrs )  { { user: user } }
+	let( :runner ) { $1.new( attrs ) }
+	let( :action ) { runner.process }
+end
+endsnippet
+
+snippet ene
+expect( ${1:condition } ).to_not eq( ${2:value} )
+endsnippet
+
+snippet rcv
+expect( ${1:object } ).to receive( :${2:message} )${3:options}
+endsnippet
+
+snippet sanity
+it 'keeps my sanity' do
+	expect( ${1:condition } ).to eq( ${2:'bob'} )
+end
+endsnippet
+
+snippet it
+it '${1}' $0
+endsnippet
+
+snippet cont
+context '${1}' do
+	$0
+end # $1
+endsnippet
+
+snippet con
+context '${1}' do
+	$0
+end # $1
+endsnippet
+
+snippet be
+before :each do
+	$0
+end
+endsnippet
+
+snippet let
+let( :${1} ) { $0 }
+endsnippet
+
+snippet desc
+describe '${1}' do
+	$0
+end
+endsnippet
+
+snippet exp
+expect( ${1} ).to$0
+endsnippet
+
+snippet exn
+expect( ${1} ).to_not $0
+endsnippet
+
+snippet vpo "rspec"
+it { should validate_presence_of( :$1 ) }
+endsnippet
+
+snippet uniq "rspec"
+it { should validate_uniqueness_of( :$1 ) }
+endsnippet
+snippet spec "controller"
+# spec/controllers/$1s_controller_spec.rb
+require 'spec_helper'
+
+describe $2sController do
+	describe 'routing' do
+	end
+
+	describe '#index' do
+		it 'populates an array of $1s'
+		it 'renders the :index view'
+	end
+
+	describe '#show' do
+		it 'assigns the requested $1 to @$1'
+		it 'renders the :show template'
+	end
+
+	describe '#new' do
+		it 'assigns a new $2 to @$1'
+		it 'renders the :new template'
+	end
+
+	describe '#create' do
+		context 'with valid attributes' do
+			it 'saves the new $1 in the database'
+			it 'redirects to the home page'
+		end
+
+		context 'with invalid attributes' do
+			it 'does not save the new $1 in the database'
+			it 're-renders the :new template'
+		end
+	end
+
+	describe '#update' do
+		context 'with valid attributes' do
+			it 'updates the $1 in the database'
+			it 'redirects to the $1 page'
+		end
+
+		context 'with invalid attributes' do
+			it 'does not update the $1 in the database'
+			it 're-renders the :new template'
+		end
+	end
+
+	describe '#delete' do
+		context 'with valid attributes' do
+			it 'updates the $1 in the database'
+			it 'redirects to the $1 page'
+		end
+
+		context 'with invalid attributes' do
+			it 'does not update the $1 in the database'
+			it 're-renders the :new template'
+		end
+	end
+end
+endsnippet
+snippet fi
+include FriendlyId
+
+friendly_id :full_path, use: :slugged
+endsnippet
+snippet cf
+create_function( :${1:name}, ${2:fn_text}, language: :plpgsql, returns: ${3:'TEXT'} )
+endsnippet
+snippet col
+column :$1, '$2'
+endsnippet
+snippet index
+alter_table :$1 do
+	add_index ${2:Sequel.function(:lower, :email) }${3:, unique: true}
+end
+endsnippet
+snippet fetch
+DB.fetch( 'select * from $1(${2:params})', $0 ).first
+endsnippet
+snippet model
+class $1 < Sequel::Model
+
+	plugin :active_model
+	plugin :validation_helpers
+
+	# Virtual Attributes
+	# attr_accessor :password, :password_confirmation, :irole
+
+	# http://sequel.jeremyevans.net/rdoc/files/doc/validations_rdoc.html
+	def validate
+		super
+
+		#validates_presence [ :email, :first_name, :last_name, :password, :password_confirmation, :irole], message: 'is required'
+		#validates_format /@/, :email
+		#validates_min_length 8, :password
+
+		#errors.add( :password_confirmation, 'should match password' ) unless :password == :password_confirmation
+	end
+end
+endsnippet
+snippet wo
+class $1::$2
+	include Sidekiq::Worker
+
+	def perform( attrs )
+		@attrs = attrs.with_indifferent_access
+		$0
+
+		begin
+
+			process_request
+
+		rescue => ex
+			print_exception( ex )
+		end
+	end
+
+	def process_request
+		return unless valid?
+
+
+	end
+
+	def valid?
+		true
+	end
+
+	def print_exception( ex )
+		Rails.logger.info '---------------------------------Exception while processing $1::$2'
+		Rails.logger.info "#{ ex.message }"
+
+		ex.backtrace.each do |msg|
+			Rails.logger.info "#{ msg }"
+		end
+
+		Rails.logger.info '---------------------------------Exception while processing $1::$2'
+	end
+end
+endsnippet
+snippet wot
+class $1::$2Test < ActiveSupport::TestCase
+
+	# include Helpers
+
+	def teardown
+		ActionMailer::Base.deliveries.clear
+	end
+
+	$0
+
+end
+endsnippet
+snippet async
+$1.perform_async( $0 )
+endsnippet
+snippet inter
+class $1
+	include Interactor
+
+	def call
+		$0
+	end
+
+end
+endsnippet
+snippet org
+class $1
+	include Interactor::Organizer
+
+	organize $0
+end
+endsnippet
+snippet do
+class $1 < Struct.new( ${2:keys} )
+	$0
+end
+endsnippet
+snippet thor "base" b
+class $1 < Thor
+	include Thor::Actions
+
+	desc "${2:command_name}", "${3:description of command}"
+	method_option :yml, required: true
+	def $2
+		puts "running $2"
+	end
+
+	private
+
+
+
+end
+
+endsnippet

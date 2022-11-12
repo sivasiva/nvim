@@ -1,0 +1,61 @@
+extends gohtmltmpl
+
+
+
+# snippet sem "Insert semantic-ui JS and CSS"
+# <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/$1.css"></script>
+# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/components/$1.css" type="text/css" media="screen" charset="utf-8">
+# $0
+# endsnippet
+
+
+
+global p!
+from snippet_helpers.py import *
+endglobal
+
+snippet grid "semantic ui grid" b
+<div class="ui container">
+	<div class="ui two column grid">
+		<div class="four wide column">Left Nav</div>
+		<div class="eight wide column">${1:Main Content}</div>
+	</div>
+</div>
+endsnippet
+
+snippet form "semantic-ui form"
+<div class="ui segment">
+	<form class="ui form">
+		<div class="field">
+			<label>Name</label>
+			<div class="two fields">
+				<div class="field">
+					<input type="text" name="shipping[first-name]" placeholder="First Name">
+				</div>
+				<div class="field">
+					<input type="text" name="shipping[last-name]" placeholder="Last Name">
+				</div>
+			</div>
+		</div>
+		<div class="field">
+			<label>Billing Address</label>
+			<div class="fields">
+				<div class="twelve wide field">
+					<input type="text" name="shipping[address]" placeholder="Street Address">
+				</div>
+				<div class="four wide field">
+					<input type="text" name="shipping[address-2]" placeholder="Apt #">
+				</div>
+			</div>
+		</div>
+		<button type="submit" class="ui large teal button">Save this!</button>
+	</form>
+</div>
+endsnippet
+
+snippet fld "semantic input field" b
+<div class="field">
+	<label for="$1">`!p snip.rv = t[1].title()`</label>
+	<input id="$1" type="text" name="$1" placeholder="`!p snip.rv = t[1].title()`" />
+</div>
+endsnippet

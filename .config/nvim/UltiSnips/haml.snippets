@@ -1,0 +1,272 @@
+snippet &
+&amp; $0
+endsnippet
+snippet ?
+- if $1?
+endsnippet
+snippet mail "block"
+%tr
+	%td.content-wrap
+		%table{ cellpadding: '0', cellspacing: '0', width: '100%' }
+			%tr
+				%td.content-block.aligncenter
+					$1
+			$0
+			%tr
+				%td.content-block
+					%a{ href: root_url } skillennium.com - Get skills. Go places.
+endsnippet
+snippet mail "single table row"
+%tr
+	%td.content-block
+		$1
+$0
+endsnippet
+snippet ff "form_for field"
+.required.field
+	= ${1:f}.label :$2, '$3'
+	= $1.text_field :$2, placeholder: '$3'
+$0
+endsnippet
+snippet dd "Semantic Dropdown for fields_for"
+.required.field
+	= f.label :$1
+	.ui.fluid.selection.dropdown
+		= f.hidden_field :$1
+		.text $2
+		%i.dropdown.icon
+		.menu
+			- [].each_with_index do |s, idx|
+				.item{ data: { value: idx } }= s
+endsnippet
+snippet dd "Profile form"
+.required.field
+	= f.label :$1
+	.ui.fluid.selection.dropdown
+		= f.hidden_field :$1
+		.text $2
+		%i.dropdown.icon
+		.menu
+			- survey.options( @instr.profile_step, :$1 ).each_with_index do |s, idx|
+				.item{ data: { value: idx } }= s
+$0
+endsnippet
+snippet proform
+- survey = @instr.survey
+
+.ui.segment
+	%h4.ui.dividing.header $1
+	= form_for @instr, as: :instructor, url: instructor_path( @instr ), html: { class: 'ui small form', id: 'instr-profile-$2' }, remote: true do |instr|
+		= instr.fields_for :profile, OpenStruct.new( instr.object.profile ) do |profile|
+			= profile.fields_for :$2, OpenStruct.new( profile.object.$2 ) do |f|
+				$0
+
+		.ui.divider
+		= instr.button class: 'ui orange right labeled icon button' do
+			Save &amp; Continue
+			%i.ui.right.arrow.icon
+endsnippet
+snippet f
+.required.field
+	%label{ for: '$1' } $2
+	%input{ id: '$1', name: '$1', placeholder: '${3:$2}' }
+	$0
+endsnippet
+snippet 3f
+.three.fields
+	$0
+endsnippet
+snippet 2f
+.two.fields
+	$0
+endsnippet
+snippet hf
+= f.hidden_field :$1, value: $2
+endsnippet
+snippet menu "secondary pointing"
+.ui.secondary.pointing.menu
+	%a.active.item $1
+	%a.item $2
+$0
+endsnippet
+snippet label "ribbon"
+%h${1:1}.ui.red.ribbon.label $0
+endsnippet
+snippet acc "base"
+.ui.accordion
+	.title
+		%i.ui.dropdown.icon
+		$1
+	.content
+		%p $0
+endsnippet
+snippet acc "item"
+.title
+	%i.ui.dropdown.icon
+	$1
+.content
+	%p lorem
+endsnippet
+snippet btn
+.ui.small.${1:green}.button
+endsnippet
+snippet dd
+.ui.dropdown
+	.text $1
+	%i.ui.dropdown.icon
+	.menu
+		.item $0
+endsnippet
+snippet b "right arrow button"
+%button.ui.${1:orange}.right.labeled.icon.button
+	$2
+	%i.${3:right.arrow}.icon
+$0
+endsnippet
+snippet hdr
+%h4.ui.dividing.header $1
+$0
+endsnippet
+snippet dr
+.ui.divider${1:.hidden}
+$0
+endsnippet
+snippet seg
+.ui.segment
+	$0
+endsnippet
+snippet form
+= form_for @$1, as: $2, url: "$3", html: { class: 'ui small form' }, remote: true do |f|
+	$0
+	%button.ui.tiny.teal.right.labeled.icon.button
+		$4
+		%i.right.arrow.icon
+endsnippet
+snippet 2col
+.ui.two.column.grid
+	.column
+		%p Left
+	.column
+		%p Right
+endsnippet
+snippet 3col
+.ui.three.column.grid
+	.column
+		%p Left
+	.column
+		%p Middle
+	.column
+		%p Right
+endsnippet
+snippet tabs "dynamic"
+#nav.ui.secondary.pointing.menu
+	- $1.each_with_index do |nav, i|
+		%a.item{ data: { tab: nav[ :key ] }, class: ( 'active' if i == 0 ) }= nav[ :title ]
+- $1.each_with_index do |nav, i|
+	.ui.tab{ data: { tab: nav[ :key ] }, class: ( 'active' if i == 0 ) }
+		%p Tab #{ nav[ :title ] }
+endsnippet
+snippet list
+%h4.ui.dividing.header $1
+.ui.bulleted.list
+	- ${2:[]}.each do |item|
+		.item= item
+endsnippet
+snippet lorem
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id odio maximus, accumsan felis pretium, rhoncus est. Nunc lorem ipsum, sagittis et dolor id, bibendum mollis purus. Nullam vitae tellus in nibh sollicitudin maximus. Aliquam pulvinar condimentum diam, nec vehicula nibh fringilla id. Nulla posuere, arcu ac maximus auctor, tortor tellus sodales sem, ut mollis orci sem vel erat.
+endsnippet
+snippet a "item"
+%a.item{ href: $1, remote: true }= $0
+endsnippet
+snippet a "loop"
+- ${0:[]}.each_with_index  do |$1, idx|
+	%a.item{ href: $2, remote: true }= $3
+endsnippet
+snippet list "loop"
+.ui.bulleted.list
+	- ${0:[]}.each_with_index do |${1:item}, ${2:idx}|
+		.item= item.name
+endsnippet
+snippet list "link list with loop"
+.ui.bulleted.list
+	- ${0:[]}.each_with_index do |${1:item}, ${2:idx}|
+		%a.item{ href: $1, remote: true }= item.name
+endsnippet
+snippet table
+%table.ui.very.basic.table
+	%thead
+		%tr
+			%th No.
+	%tbody
+		- [].each_with_index do |item, idx|
+			%tr
+				%td= idx + 1
+endsnippet
+snippet tags
+- set_meta_tags title: @$1.title, description: @$1.description, keywords: @$1.keywords
+endsnippet
+snippet seo
+- set_meta_tags title: @$1.title, description: @$1.description, keywords: @$1.keywords
+endsnippet
+snippet meta
+- set_meta_tags title: @$1.title, description: @$1.description, keywords: @$1.keywords
+endsnippet
+snippet summary
+- if details[ :$1 ][ :summary ].present?
+	%p= details[ :$1 ][ :summary ]
+$0
+endsnippet
+snippet list
+- if details[ :$1 ][ :list ].present?
+	.ui.bulleted.list
+		- details[ :$1 ][ :list ].each do |item|
+			.item= item
+$0
+endsnippet
+snippet acc "summary + list"
+.title
+	%i.ui.dropdown.icon
+	$1
+.content
+	- if details[ :$2 ][ :summary ].present?
+		%p= details[ :$2 ][ :summary ]
+	- if details[ :$2 ][ :list ].present?
+		.ui.bulleted.list
+			- details[ :$2 ][ :list ].each do |item|
+				.item= item
+$0
+endsnippet
+snippet acc "nested"
+.title
+	%i.ui.dropdown.icon
+	$1
+.content
+	- if details[ :$1 ][ :$2 ][ :summary ]
+		.ui.dividing.header $3
+		%p= details[ :$1 ][ :$2 ][ :summary ]
+	- if details[ :$1 ][ :$2 ][ :list ]
+		.ui.segment
+			.ui.tiny.dividing.header $3
+			.ui.bulleted.list
+				- details[ :$1 ][ :$2 ][ :list ].each do |i|
+					.item= i
+endsnippet
+snippet con
+= concept( '$1/cell', ${2:model} ).( :${3:show} )
+endsnippet
+snippet spa "SPA mount with data"
+- content_for :webpack do
+	= webpack_bundle_tag '$1'
+
+
+#$2SPA{ data: { json: "#{ current_user.data }" } }
+	.ui.top.attached.header
+		%h4 Please wait. We are preparing your page....
+	.ui.attached.segment.loading{ style: 'min-height: 400px;' }
+endsnippet
+
+snippet wp
+- content_for :webpack do
+	= webpack_bundle_tag '${1:guest}'
+endsnippet
+
